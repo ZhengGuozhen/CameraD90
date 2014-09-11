@@ -96,10 +96,10 @@
             <Button
                 android:id="@+id/button_photoSize"
                 android:text="8M"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
                 android:textStyle="bold"
                 android:background="@drawable/circle_button_trans" />
             <Button
@@ -149,7 +149,7 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="75dp"
+                android:layout_marginLeft="64dp"
                 android:textStyle="bold"
                 android:background="@drawable/circle_button" />
 
@@ -173,7 +173,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_marginBottom="4dp"
             android:textStyle="bold"
             android:background="@drawable/circle_button_trans" />

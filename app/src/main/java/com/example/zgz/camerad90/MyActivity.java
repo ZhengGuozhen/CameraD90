@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.gesture.GestureOverlayView;
 import android.graphics.Bitmap;
@@ -32,6 +33,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -84,6 +86,7 @@ public class MyActivity extends Activity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private DrawerLayout mDrawerLayout;
 
+    private static final int REQ_SYSTEM_SETTINGS = 0;
     public static final int IN_SAMPLE_SIZE = 5;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
@@ -142,6 +145,8 @@ public class MyActivity extends Activity
     private boolean saving = false;
     private boolean isRecording = false;
 
+    private SharedPreferences mSharedPreferences;
+
     private View mDecorView;
 
     private int cursorPosition;
@@ -186,6 +191,7 @@ public class MyActivity extends Activity
         hideSystemUI();
         setContentView(R.layout.activity_my);
 
+        mSharedPreferences= PreferenceManager.getDefaultSharedPreferences(this) ;
 
         mDetector = new GestureDetectorCompat(this, new MyGestureListener());
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -378,6 +384,7 @@ public class MyActivity extends Activity
                             mCamera.setParameters(params);
 
                             focusing=false;
+                            saving=false;
 
 
 
@@ -389,6 +396,7 @@ public class MyActivity extends Activity
                             layout_draw.setLayoutParams(layoutParams);
 
                         } else {
+                            drawArea2(ivFocus);
                             setVisible(View.INVISIBLE);
 
                             previewMaxX=1080;
@@ -399,6 +407,7 @@ public class MyActivity extends Activity
                             layout_draw.setLayoutParams(layoutParams);
 
                             focusing=true;
+                            saving=true;
 
 
 
@@ -508,16 +517,18 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //转到Settings设置界面
+                        startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), REQ_SYSTEM_SETTINGS);
 
-                        Camera.Parameters params = mCamera.getParameters();
-                        if (params.getPictureSize().width == 3264) {
-                            params.setPictureSize(5248, 3936);
-                            button_photoSize.setText("20M");
-                        } else {
-                            params.setPictureSize(3264, 2448);
-                            button_photoSize.setText("8M");
-                        }
-                        mCamera.setParameters(params);
+//                        Camera.Parameters params = mCamera.getParameters();
+//                        if (params.getPictureSize().width == 3264) {
+//                            params.setPictureSize(5248, 3936);
+//                            button_photoSize.setText("20M");
+//                        } else {
+//                            params.setPictureSize(3264, 2448);
+//                            button_photoSize.setText("8M");
+//                        }
+//                        mCamera.setParameters(params);
 
                     }
                 }
@@ -1439,7 +1450,8 @@ public class MyActivity extends Activity
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setVideoSize(1920,1080);
-//        mMediaRecorder.setVideoEncodingBitRate(8000);
+        mMediaRecorder.setVideoEncodingBitRate(8000000);
+        //设定帧率无效
 //        mMediaRecorder.setVideoFrameRate(24);
 
         // Step 4: Set output file

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings">
+    <PreferenceCategory android:title="Camera Settings">
+        <ListPreference
+            android:dialogTitle="Choose photo size"
+            android:entries="@array/photo_size_key"
+            android:entryValues="@array/photo_size_value"
+            android:key="photo_size"
+            android:title="video bps">
+            </ListPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Video Settings">
+        <ListPreference
+            android:dialogTitle="Choose video bps"
+            android:entries="@array/video_bps_key"
+            android:entryValues="@array/video_bps_value"
+            android:key="video_bps"
+            android:title="video bps">
+            </ListPreference>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="About">
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
