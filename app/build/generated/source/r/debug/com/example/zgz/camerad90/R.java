@@ -16,36 +16,39 @@ public final class R {
         public static final int navigation_drawer_width=0x7f040002;
     }
     public static final class drawable {
-        public static final int drawer_shadow=0x7f020000;
-        public static final int ic_drawer=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
+        public static final int circle_button=0x7f020000;
+        public static final int circle_button_trans=0x7f020001;
+        public static final int drawer_shadow=0x7f020002;
+        public static final int ic_drawer=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
     }
     public static final class id {
-        public static final int action_example=0x7f080018;
-        public static final int action_settings=0x7f080017;
+        public static final int action_example=0x7f080019;
+        public static final int action_settings=0x7f080018;
         public static final int button_capture=0x7f08000a;
-        public static final int button_delete=0x7f080016;
+        public static final int button_close=0x7f080012;
+        public static final int button_delete=0x7f080017;
         public static final int button_ec=0x7f080007;
         public static final int button_ecAdd=0x7f080008;
         public static final int button_ecReduce=0x7f080009;
         public static final int button_flash=0x7f08000c;
         public static final int button_focusMode=0x7f08000e;
         public static final int button_lock=0x7f080011;
-        public static final int button_next=0x7f080015;
+        public static final int button_next=0x7f080016;
         public static final int button_photoSize=0x7f08000b;
-        public static final int button_previous=0x7f080014;
+        public static final int button_previous=0x7f080015;
         public static final int button_record=0x7f080010;
         public static final int button_shutter=0x7f08000f;
         public static final int button_zoom=0x7f08000d;
         public static final int camera_preview=0x7f080003;
         public static final int container=0x7f080001;
         public static final int drawer_layout=0x7f080000;
-        public static final int imageView_review=0x7f080013;
+        public static final int imageView_review=0x7f080014;
         public static final int ivFocus=0x7f080005;
         public static final int ivMetering=0x7f080004;
         public static final int layout_buttons=0x7f080006;
         public static final int layout_draw=0x7f080002;
-        public static final int navigation_drawer=0x7f080012;
+        public static final int navigation_drawer=0x7f080013;
     }
     public static final class layout {
         public static final int activity_my=0x7f030000;

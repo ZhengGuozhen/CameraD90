@@ -117,6 +117,7 @@ public class MyActivity extends Activity
     private Button button_lock;
     private Button button_flash;
     private Button button_focusMode;
+    private Button button_close;
 
     private ImageView imageView_review;
     private Button button_previous;
@@ -150,11 +151,22 @@ public class MyActivity extends Activity
         // Set the IMMERSIVE flag.
         // Set the content to appear under the system bars so that the content
         // doesn't resize when the system bars hide and show.
+
+        //隐藏标题栏，不隐藏导航栏，导航栏图标为小圆点
+//        mDecorView.setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                        | View.SYSTEM_UI_FLAG_LOW_PROFILE
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+//                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+        //隐藏标题栏，隐藏导航栏，
         mDecorView.setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LOW_PROFILE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
@@ -210,6 +222,7 @@ public class MyActivity extends Activity
         layout_draw = (RelativeLayout) findViewById(R.id.layout_draw);
         button_zoom = (Button) findViewById(R.id.button_zoom);
         button_focusMode = (Button) findViewById(R.id.button_focusMode);
+        button_close = (Button) findViewById(R.id.button_close);
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
         layoutParams.width = (int) previewMaxX;
@@ -355,13 +368,41 @@ public class MyActivity extends Activity
                             releaseMediaRecorder(); // release the MediaRecorder object
                             mCamera.lock();         // take camera access back from MediaRecorder
 
-                            resumeCamera();
-
                             // inform the user that recording has stopped
                             button_record.setText("Rec");
                             isRecording = false;
-                        } else {
 
+                            setVisible(View.VISIBLE);
+                            Camera.Parameters params = mCamera.getParameters();
+                            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+                            mCamera.setParameters(params);
+
+                            focusing=false;
+
+
+
+                            previewMaxX=1080;
+                            previewMaxY=1440;
+                            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
+                            layoutParams.width = (int) previewMaxX;
+                            layoutParams.height = (int) previewMaxY;
+                            layout_draw.setLayoutParams(layoutParams);
+
+                        } else {
+                            setVisible(View.INVISIBLE);
+
+                            previewMaxX=1080;
+                            previewMaxY=1920;
+                            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
+                            layoutParams.width = (int) previewMaxX;
+                            layoutParams.height = (int) previewMaxY;
+                            layout_draw.setLayoutParams(layoutParams);
+
+                            focusing=true;
+
+
+
+                            //prepareVideoRecorder之前必须releaseCamera
                             releaseCamera();
 
                             // initialize video camera
@@ -558,10 +599,10 @@ public class MyActivity extends Activity
                         Camera.Parameters params = mCamera.getParameters();
                         //判断字符串是否相等使用equals方法!!!
                         if (params.getFocusMode().equals(Camera.Parameters.FOCUS_MODE_AUTO)) {
-                            params.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
-                        }else if (params.getFocusMode().equals(Camera.Parameters.FOCUS_MODE_INFINITY)){
                             params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
                         }else if (params.getFocusMode().equals(Camera.Parameters.FOCUS_MODE_MACRO)){
+                            params.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
+                        }else if (params.getFocusMode().equals(Camera.Parameters.FOCUS_MODE_INFINITY)){
                             params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
                         }else if (params.getFocusMode().equals(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)){
                             params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
@@ -609,6 +650,16 @@ public class MyActivity extends Activity
                     }
                 }
         );
+
+        button_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mSensorManager.unregisterListener(MyActivity.this);
+                releaseMediaRecorder();
+                releaseCamera();
+                finish();
+            }
+        });
 
         //自动聚焦变量回调
         myAutoFocusCallback = new Camera.AutoFocusCallback() {
@@ -752,6 +803,20 @@ public class MyActivity extends Activity
         public void surfaceCreated(SurfaceHolder holder) {
             // The Surface has been created, now tell the camera where to draw the preview.
 
+            Camera.Parameters params = mCamera.getParameters();
+            //默认previewSize为640*480
+            params.setPreviewSize(previewSizeX, previewSizeY);
+            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            mCamera.setParameters(params);
+            setFocusArea(previewMaxX / 2, previewMaxY / 2, focusSize);
+
+            try {
+                mCamera.setPreviewDisplay(holder);
+                mCamera.setDisplayOrientation(90);
+                mCamera.startPreview();
+            } catch (IOException e) {
+                Log.d(TAG, "Error setting camera preview: " + e.getMessage());
+            }
         }
 
         public void surfaceDestroyed(SurfaceHolder holder) {
@@ -759,39 +824,32 @@ public class MyActivity extends Activity
         }
 
         public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-            // If your preview can change or rotate, take care of those events here.
-            // Make sure to stop the preview before resizing or reformatting it.
-
-            if (mHolder.getSurface() == null) {
-                // preview surface does not exist
-                return;
-            }
-
-            // stop preview before making changes
-            try {
-                mCamera.stopPreview();
-            } catch (Exception e) {
-                // ignore: tried to stop a non-existent preview
-            }
-
-            // set preview size and make any resize, rotate or
-            // reformatting changes here
-
-            Camera.Parameters params = mCamera.getParameters();
-            params.setPreviewSize(previewSizeX, previewSizeY);
-            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            mCamera.setParameters(params);
-            setFocusArea(previewMaxX / 2, previewMaxY / 2, focusSize);
-            //setMeteringArea(previewMaxX / 2, previewMaxY / 2, meteringSize);
-
-            // start preview with new settings
-            try {
-                mCamera.setPreviewDisplay(mHolder);
-                mCamera.setDisplayOrientation(90);
-                mCamera.startPreview();
-            } catch (Exception e) {
-                Log.d(TAG, "Error starting camera preview: " + e.getMessage());
-            }
+//            // If your preview can change or rotate, take care of those events here.
+//            // Make sure to stop the preview before resizing or reformatting it.
+//
+//            if (mHolder.getSurface() == null){
+//                // preview surface does not exist
+//                return;
+//            }
+//
+//            // stop preview before making changes
+//            try {
+//                mCamera.stopPreview();
+//            } catch (Exception e){
+//                // ignore: tried to stop a non-existent preview
+//            }
+//
+//            // set preview size and make any resize, rotate or
+//            // reformatting changes here
+//
+//            // start preview with new settings
+//            try {
+//                mCamera.setPreviewDisplay(mHolder);
+//                mCamera.startPreview();
+//
+//            } catch (Exception e){
+//                Log.d(TAG, "Error starting camera preview: " + e.getMessage());
+//            }
         }
     }
 
@@ -1060,11 +1118,32 @@ public class MyActivity extends Activity
         button_zoom.setRotation(r);
         button_photoSize.setRotation(r);
         button_focusMode.setRotation(r);
+        button_record.setRotation(r);
+        button_close.setRotation(r);
 
         imageView_review.setRotation(r);
         button_previous.setRotation(r);
         button_delete.setRotation(r);
         button_next.setRotation(r);
+    }
+
+    private void setVisible(int r) {
+        button_ecAdd.setVisibility(r);
+        button_ec.setVisibility(r);
+        button_ecReduce.setVisibility(r);
+
+        button_capture.setVisibility(r);
+//        button_lock.setVisibility(r);
+        button_flash.setVisibility(r);
+        button_shutter.setVisibility(r);
+//        button_zoom.setVisibility(r);
+        button_photoSize.setVisibility(r);
+        button_focusMode.setVisibility(r);
+
+        imageView_review.setVisibility(r);
+        button_previous.setVisibility(r);
+        button_delete.setVisibility(r);
+        button_next.setVisibility(r);
     }
 
 
@@ -1330,10 +1409,21 @@ public class MyActivity extends Activity
         mCamera = getCameraInstance();
         mMediaRecorder = new MediaRecorder();
 
+
+        //设置参数
         //设置显示的旋转
         mCamera.setDisplayOrientation(90);
         //设置保存的旋转信息
         mMediaRecorder.setOrientationHint(photoDegree);
+
+        Camera.Parameters params = mCamera.getParameters();
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+        mCamera.setParameters(params);
+
+
+
+
+
 
         // Step 1: Unlock and set camera to MediaRecorder
         mCamera.unlock();
@@ -1344,7 +1434,13 @@ public class MyActivity extends Activity
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
         // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
-        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+//        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_1080P));
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        mMediaRecorder.setVideoSize(1920,1080);
+//        mMediaRecorder.setVideoEncodingBitRate(8000);
+//        mMediaRecorder.setVideoFrameRate(24);
 
         // Step 4: Set output file
         mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
