@@ -14,6 +14,7 @@ int drawable circle_button_trans 0x7f020001
 int drawable drawer_shadow 0x7f020002
 int drawable ic_drawer 0x7f020003
 int drawable ic_launcher 0x7f020004
+int drawable over_button 0x7f020005
 int id action_example 0x7f0a0019
 int id action_settings 0x7f0a0018
 int id button_capture 0x7f0a000a
@@ -26,9 +27,9 @@ int id button_flash 0x7f0a000c
 int id button_focusMode 0x7f0a000e
 int id button_lock 0x7f0a0011
 int id button_next 0x7f0a0016
-int id button_photoSize 0x7f0a000b
 int id button_previous 0x7f0a0015
 int id button_record 0x7f0a0010
+int id button_settings 0x7f0a000b
 int id button_shutter 0x7f0a000f
 int id button_zoom 0x7f0a000d
 int id camera_preview 0x7f0a0003

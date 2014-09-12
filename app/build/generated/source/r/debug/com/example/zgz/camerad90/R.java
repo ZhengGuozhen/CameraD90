@@ -31,6 +31,7 @@ public final class R {
         public static final int drawer_shadow=0x7f020002;
         public static final int ic_drawer=0x7f020003;
         public static final int ic_launcher=0x7f020004;
+        public static final int over_button=0x7f020005;
     }
     public static final class id {
         public static final int action_example=0x7f0a0019;
@@ -45,9 +46,9 @@ public final class R {
         public static final int button_focusMode=0x7f0a000e;
         public static final int button_lock=0x7f0a0011;
         public static final int button_next=0x7f0a0016;
-        public static final int button_photoSize=0x7f0a000b;
         public static final int button_previous=0x7f0a0015;
         public static final int button_record=0x7f0a0010;
+        public static final int button_settings=0x7f0a000b;
         public static final int button_shutter=0x7f0a000f;
         public static final int button_zoom=0x7f0a000d;
         public static final int camera_preview=0x7f0a0003;

@@ -9,12 +9,13 @@
         android:bottomRightRadius="28dp"
         android:topLeftRadius="28dp"
         android:topRightRadius="28dp" />
+    <!-- 圆角，你也可以对不同的角设置不同的数值 -->
 
-    <solid android:color="#FF45c1ff" />
+    <solid android:color="#80ff0000" />
     <!-- 形状的填充色 -->
 
     <stroke
-        android:width="2dp"
+        android:width="4dp"
         android:color="#000000" />
     <!-- 边框宽度和颜色 -->
 </shape>

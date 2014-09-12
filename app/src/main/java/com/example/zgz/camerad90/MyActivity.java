@@ -111,7 +111,7 @@ public class MyActivity extends Activity
     private ImageView ivFocus;
     private ImageView ivMetering;
     private Button button_capture;
-    private Button button_photoSize;
+    private Button button_settings;
     private Button button_ec;
     private Button button_ecAdd;
     private Button button_ecReduce;
@@ -209,7 +209,7 @@ public class MyActivity extends Activity
         ivFocus = (ImageView) findViewById(R.id.ivFocus);
         ivMetering = (ImageView) findViewById(R.id.ivMetering);
         button_capture = (Button) findViewById(R.id.button_capture);
-        button_photoSize = (Button) findViewById(R.id.button_photoSize);
+        button_settings = (Button) findViewById(R.id.button_settings);
         button_record = (Button) findViewById(R.id.button_record);
 
         button_ec = (Button) findViewById(R.id.button_ec);
@@ -441,6 +441,8 @@ public class MyActivity extends Activity
 
                         switch (event.getAction() & MotionEvent.ACTION_MASK) {
                             case MotionEvent.ACTION_DOWN:
+                                captureMode=0;
+
                                 break;
 
                             case MotionEvent.ACTION_UP:
@@ -494,17 +496,18 @@ public class MyActivity extends Activity
                                 //手指松开拍照，手指滑出按钮后松开则取消拍照
                                 if (x > 0 && x < xx && y > 0 && y < yy) {
                                     takePhoto();
+                                }else{
+                                    mCamera.cancelAutoFocus();
+                                    focusing = false;
+
+                                    Camera.Parameters parameters = mCamera.getParameters();
+                                    parameters.setAutoExposureLock(false);
+                                    mCamera.setParameters(parameters);
+                                    button_lock.setVisibility(View.INVISIBLE);
+
+                                    layout_buttons.setVisibility(View.VISIBLE);//取消拍照后显示其他按钮
                                 }
 
-                                mCamera.cancelAutoFocus();
-                                focusing = false;
-
-                                Camera.Parameters parameters = mCamera.getParameters();
-                                parameters.setAutoExposureLock(false);
-                                mCamera.setParameters(parameters);
-                                button_lock.setVisibility(View.INVISIBLE);
-
-                                layout_buttons.setVisibility(View.VISIBLE);//取消拍照后显示其他按钮
 
                                 break;
                         }
@@ -514,7 +517,7 @@ public class MyActivity extends Activity
                 }
         );
 
-        button_photoSize.setOnClickListener(
+        button_settings.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -524,10 +527,10 @@ public class MyActivity extends Activity
 //                        Camera.Parameters params = mCamera.getParameters();
 //                        if (params.getPictureSize().width == 3264) {
 //                            params.setPictureSize(5248, 3936);
-//                            button_photoSize.setText("20M");
+//                            button_settings.setText("20M");
 //                        } else {
 //                            params.setPictureSize(3264, 2448);
-//                            button_photoSize.setText("8M");
+//                            button_settings.setText("8M");
 //                        }
 //                        mCamera.setParameters(params);
 
@@ -736,7 +739,6 @@ public class MyActivity extends Activity
         //resume后相机初始化了，ui没有，需要想ui恢复到与camera对应值
         Camera.Parameters params = mCamera.getParameters();
         button_ec.setText(params.getExposureCompensation()+"");
-        button_photoSize.setText("8M");
         button_flash.setText(params.getFlashMode());
         button_zoom.setText(params.getZoom()+"");
         button_focusMode.setText(params.getFocusMode());
@@ -885,6 +887,23 @@ public class MyActivity extends Activity
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
+
+            //拍摄完成之后，才执行下面配置，避免曝光过程中取消对焦和曝光锁定！
+            if(captureMode==1){
+                mCamera.cancelAutoFocus();
+                focusing = false;
+
+                Camera.Parameters parameters = mCamera.getParameters();
+                parameters.setAutoExposureLock(false);
+                mCamera.setParameters(parameters);
+                button_lock.setVisibility(View.INVISIBLE);
+
+                layout_buttons.setVisibility(View.VISIBLE);//取消拍照后显示其他按钮
+            }
+            if(!justFocus){
+                justFocus=true;
+            }
+
 
             File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
             if (pictureFile == null) {
@@ -1144,7 +1163,7 @@ public class MyActivity extends Activity
         button_flash.setRotation(r);
         button_shutter.setRotation(r);
         button_zoom.setRotation(r);
-        button_photoSize.setRotation(r);
+        button_settings.setRotation(r);
         button_focusMode.setRotation(r);
         button_record.setRotation(r);
         button_close.setRotation(r);
@@ -1165,7 +1184,7 @@ public class MyActivity extends Activity
         button_flash.setVisibility(r);
         button_shutter.setVisibility(r);
 //        button_zoom.setVisibility(r);
-        button_photoSize.setVisibility(r);
+        button_settings.setVisibility(r);
         button_focusMode.setVisibility(r);
 
         imageView_review.setVisibility(r);
@@ -1324,6 +1343,7 @@ public class MyActivity extends Activity
 
     private boolean focusKey = false;//每个按键按下后只检测一次
     private boolean cameraKey = false;
+    private boolean justFocus = true;//标识只按了对焦键，没有按拍照键的情况
 
     //当一个按键按下保持不放时，会不断触发onKeyDown时间,注意处理
     @Override
@@ -1359,6 +1379,7 @@ public class MyActivity extends Activity
         } else if (keyCode == KeyEvent.KEYCODE_CAMERA) {
             if (!cameraKey) {
                 cameraKey = true;
+                justFocus=false;
 
                 //按下按键后延迟拍照，避免抖动
                 new Handler().postDelayed(new Runnable() {
@@ -1366,7 +1387,7 @@ public class MyActivity extends Activity
                         //execute the task
                         takePhoto();
                     }
-                }, 300);
+                }, 1000);
             }
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -1385,15 +1406,17 @@ public class MyActivity extends Activity
             // Handle camera focus and consume the key event
             focusKey = false;
 
-            mCamera.cancelAutoFocus();
-            focusing = false;
+            if(justFocus) {
+                mCamera.cancelAutoFocus();
+                focusing = false;
 
-            Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setAutoExposureLock(false);
-            mCamera.setParameters(parameters);
-            button_lock.setVisibility(View.INVISIBLE);
+                Camera.Parameters parameters = mCamera.getParameters();
+                parameters.setAutoExposureLock(false);
+                mCamera.setParameters(parameters);
+                button_lock.setVisibility(View.INVISIBLE);
 
-            layout_buttons.setVisibility(View.VISIBLE);
+                layout_buttons.setVisibility(View.VISIBLE);
+            }
 
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_CAMERA) {
@@ -1415,13 +1438,6 @@ public class MyActivity extends Activity
             saving = true;
 
             Camera.Parameters parameters = mCamera.getParameters();
-            //动画
-            drawArea2(ivFocus);
-            //drawArea2(ivMetering);
-            Animation scale = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-            scale.setDuration(350);
-            scale.setInterpolator(new DecelerateInterpolator());
-            camera_preview.startAnimation(scale);
             //设置保存下来的图片旋转，不是预览的旋转
             parameters.setRotation(photoDegree);
             mCamera.setParameters(parameters);
@@ -1429,6 +1445,14 @@ public class MyActivity extends Activity
             mCamera.takePicture(null, null, mPicture);
             button_capture.setEnabled(false);
             button_shutter.setEnabled(false);
+
+            //动画
+            drawArea2(ivFocus);
+            //drawArea2(ivMetering);
+            Animation scale = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+            scale.setDuration(350);
+            scale.setInterpolator(new DecelerateInterpolator());
+            camera_preview.startAnimation(scale);
         }
     }
 
@@ -1450,9 +1474,6 @@ public class MyActivity extends Activity
 
 
 
-
-
-
         // Step 1: Unlock and set camera to MediaRecorder
         mCamera.unlock();
         mMediaRecorder.setCamera(mCamera);
@@ -1470,6 +1491,8 @@ public class MyActivity extends Activity
         mMediaRecorder.setVideoEncodingBitRate(VideoBitRate);
         //设定帧率无效
 //        mMediaRecorder.setVideoFrameRate(24);
+
+
 
         // Step 4: Set output file
         mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
