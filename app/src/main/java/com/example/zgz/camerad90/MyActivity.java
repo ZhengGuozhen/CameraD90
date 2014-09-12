@@ -96,6 +96,7 @@ public class MyActivity extends Activity
     private float previewMaxY = 1440;
     private int previewSizeX = 640;
     private int previewSizeY = 480;
+    private int VideoBitRate = 8000000;
     private final String TAG = MyActivity.class.getSimpleName();
     private Camera mCamera;
     private Camera.AutoFocusCallback myAutoFocusCallback = null;
@@ -730,6 +731,7 @@ public class MyActivity extends Activity
         mDrawerLayout.closeDrawers();
 
         resumeCamera();
+        setDefaultCamera();
 
         //resume后相机初始化了，ui没有，需要想ui恢复到与camera对应值
         Camera.Parameters params = mCamera.getParameters();
@@ -779,6 +781,29 @@ public class MyActivity extends Activity
         }
     }
 
+    private void setDefaultCamera(){
+        Camera.Parameters params = mCamera.getParameters();
+        //默认previewSize为640*480
+        params.setPreviewSize(previewSizeX, previewSizeY);
+        params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+
+        String photo_size=mSharedPreferences.getString("photo_size","800");
+        if(photo_size.equals("2070")){
+            params.setPictureSize(5248, 3936);
+        }else if(photo_size.equals("800")){
+            params.setPictureSize(3264, 2448);
+        }else if(photo_size.equals("300")){
+            params.setPictureSize(2048, 1536);
+        }
+
+        String video_bps=mSharedPreferences.getString("video_bps","8000000");
+        VideoBitRate=Integer.parseInt(video_bps);
+
+        mCamera.setParameters(params);
+        setFocusArea(previewMaxX / 2, previewMaxY / 2, focusSize);
+
+    }
+
     /**
      * A safe way to get an instance of the Camera object.
      */
@@ -813,14 +838,6 @@ public class MyActivity extends Activity
 
         public void surfaceCreated(SurfaceHolder holder) {
             // The Surface has been created, now tell the camera where to draw the preview.
-
-            Camera.Parameters params = mCamera.getParameters();
-            //默认previewSize为640*480
-            params.setPreviewSize(previewSizeX, previewSizeY);
-            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            mCamera.setParameters(params);
-            setFocusArea(previewMaxX / 2, previewMaxY / 2, focusSize);
-
             try {
                 mCamera.setPreviewDisplay(holder);
                 mCamera.setDisplayOrientation(90);
@@ -1450,7 +1467,7 @@ public class MyActivity extends Activity
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setVideoSize(1920,1080);
-        mMediaRecorder.setVideoEncodingBitRate(8000000);
+        mMediaRecorder.setVideoEncodingBitRate(VideoBitRate);
         //设定帧率无效
 //        mMediaRecorder.setVideoFrameRate(24);
 

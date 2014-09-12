@@ -2,97 +2,161 @@
 <merger version="2" >
 
     <dataSet config="20.0.0" >
-        <source path="E:\GitHub\CameraD90\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\res" />
+        <source path="D:\GitHub\CameraD90\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\res" />
     </dataSet>
     <dataSet config="main" >
-        <source path="E:\GitHub\CameraD90\app\src\main\res" >
+        <source path="D:\GitHub\CameraD90\app\src\main\res" >
             <file
                 name="drawer_shadow"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-hdpi\drawer_shadow.9.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-hdpi\drawer_shadow.9.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-hdpi\ic_drawer.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-hdpi\ic_drawer.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-hdpi\ic_launcher.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-hdpi\ic_launcher.png"
                 qualifiers="hdpi-v4"
                 type="drawable" />
             <file
                 name="drawer_shadow"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-mdpi\drawer_shadow.9.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-mdpi\drawer_shadow.9.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-mdpi\ic_drawer.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-mdpi\ic_drawer.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-mdpi\ic_launcher.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-mdpi\ic_launcher.png"
                 qualifiers="mdpi-v4"
                 type="drawable" />
             <file
                 name="drawer_shadow"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xhdpi\drawer_shadow.9.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xhdpi\drawer_shadow.9.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xhdpi\ic_drawer.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xhdpi\ic_drawer.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xhdpi\ic_launcher.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xhdpi\ic_launcher.png"
                 qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
+                name="circle_button"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\circle_button.xml"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
+                name="circle_button_trans"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\circle_button_trans.xml"
+                qualifiers="xxhdpi-v4"
+                type="drawable" />
+            <file
                 name="drawer_shadow"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\drawer_shadow.9.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\drawer_shadow.9.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_drawer"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\ic_drawer.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\ic_drawer.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="ic_launcher"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\ic_launcher.png"
+                path="D:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\ic_launcher.png"
                 qualifiers="xxhdpi-v4"
                 type="drawable" />
             <file
                 name="activity_my"
-                path="E:\GitHub\CameraD90\app\src\main\res\layout\activity_my.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\layout\activity_my.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="fragment_navigation_drawer"
-                path="E:\GitHub\CameraD90\app\src\main\res\layout\fragment_navigation_drawer.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\layout\fragment_navigation_drawer.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="photos"
-                path="E:\GitHub\CameraD90\app\src\main\res\layout\photos.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\layout\photos.xml"
                 qualifiers=""
                 type="layout" />
             <file
                 name="global"
-                path="E:\GitHub\CameraD90\app\src\main\res\menu\global.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\menu\global.xml"
                 qualifiers=""
                 type="menu" />
             <file
                 name="my"
-                path="E:\GitHub\CameraD90\app\src\main\res\menu\my.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\menu\my.xml"
                 qualifiers=""
                 type="menu" />
             <file
-                path="E:\GitHub\CameraD90\app\src\main\res\values\dimens.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\values\array.xml"
+                qualifiers="" >
+                <string-array name="video_bps_key" >
+                    <item>
+2000 kbps
+                    </item>
+                    <item>
+4000 kbps
+                    </item>
+                    <item>
+8000 kbps
+                    </item>
+                    <item>
+16000 kbps
+                    </item>
+                </string-array>
+                <string-array name="video_bps_value" >
+                    <item>
+2000000
+                    </item>
+                    <item>
+4000000
+                    </item>
+                    <item>
+8000000
+                    </item>
+                    <item>
+16000000
+                    </item>
+                </string-array>
+                <string-array name="photo_size_value" >
+                    <item>
+2070
+                    </item>
+                    <item>
+800
+                    </item>
+                    <item>
+300
+                    </item>
+                </string-array>
+                <string-array name="photo_size_key" >
+                    <item>
+20.7m
+                    </item>
+                    <item>
+8m
+                    </item>
+                    <item>
+3m
+                    </item>
+                </string-array>
+            </file>
+            <file
+                path="D:\GitHub\CameraD90\app\src\main\res\values\dimens.xml"
                 qualifiers="" >
                 <dimen name="activity_vertical_margin" >16dp
                 </dimen>
@@ -102,7 +166,7 @@
                 </dimen>
             </file>
             <file
-                path="E:\GitHub\CameraD90\app\src\main\res\values\strings.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\values\strings.xml"
                 qualifiers="" >
                 <string name="action_example" >Example action
                 </string>
@@ -122,59 +186,7 @@
                 </string>
             </file>
             <file
-                path="E:\GitHub\CameraD90\app\src\main\res\values\styles.xml"
-                qualifiers="" >
-
-                <style
-                    name="AppTheme"
-                    parent="android:Theme.Holo.Light.DarkActionBar" >
-
-                    <!-- Customize your theme here. -->
-                </style>
-            </file>
-            <file
-                path="E:\GitHub\CameraD90\app\src\main\res\values-w820dp\dimens.xml"
-                qualifiers="w820dp-v13" >
-                <dimen name="activity_horizontal_margin" >64dp
-                </dimen>
-            </file>
-            <file
-                name="circle_button"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\circle_button.xml"
-                qualifiers="xxhdpi-v4"
-                type="drawable" />
-            <file
-                name="circle_button_trans"
-                path="E:\GitHub\CameraD90\app\src\main\res\drawable-xxhdpi\circle_button_trans.xml"
-                qualifiers="xxhdpi-v4"
-                type="drawable" />
-            <file
-                name="pref_data_sync"
-                path="E:\GitHub\CameraD90\app\src\main\res\xml\pref_data_sync.xml"
-                qualifiers=""
-                type="xml" />
-            <file
-                name="pref_general"
-                path="E:\GitHub\CameraD90\app\src\main\res\xml\pref_general.xml"
-                qualifiers=""
-                type="xml" />
-            <file
-                name="settings"
-                path="E:\GitHub\CameraD90\app\src\main\res\xml\settings.xml"
-                qualifiers=""
-                type="xml" />
-            <file
-                name="pref_headers"
-                path="E:\GitHub\CameraD90\app\src\main\res\xml\pref_headers.xml"
-                qualifiers=""
-                type="xml" />
-            <file
-                name="pref_notification"
-                path="E:\GitHub\CameraD90\app\src\main\res\xml\pref_notification.xml"
-                qualifiers=""
-                type="xml" />
-            <file
-                path="E:\GitHub\CameraD90\app\src\main\res\values\strings_activity_settings.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\values\strings_activity_settings.xml"
                 qualifiers="" >
                 <string name="pref_header_notifications" >Notifications
                 </string>
@@ -278,65 +290,53 @@ Never
                 </string>
             </file>
             <file
-                path="E:\GitHub\CameraD90\app\src\main\res\values\array.xml"
+                path="D:\GitHub\CameraD90\app\src\main\res\values\styles.xml"
                 qualifiers="" >
-                <string-array name="video_bps_key" >
-                    <item>
-1000 kbps
-                    </item>
-                    <item>
-2000 kbps
-                    </item>
-                    <item>
-4000 kbps
-                    </item>
-                    <item>
-8000 kbps
-                    </item>
-                </string-array>
-                <string-array name="video_bps_value" >
-                    <item>
-1000000
-                    </item>
-                    <item>
-2000000
-                    </item>
-                    <item>
-4000000
-                    </item>
-                    <item>
-8000000
-                    </item>
-                </string-array>
-                <string-array name="photo_size_value" >
-                    <item>
-2070
-                    </item>
-                    <item>
-800
-                    </item>
-                    <item>
-300
-                    </item>
-                </string-array>
-                <string-array name="photo_size_key" >
-                    <item>
-20.7m
-                    </item>
-                    <item>
-8m
-                    </item>
-                    <item>
-3m
-                    </item>
-                </string-array>
+
+                <style
+                    name="AppTheme"
+                    parent="android:Theme.Holo.Light.DarkActionBar" >
+
+                    <!-- Customize your theme here. -->
+                </style>
             </file>
+            <file
+                path="D:\GitHub\CameraD90\app\src\main\res\values-w820dp\dimens.xml"
+                qualifiers="w820dp-v13" >
+                <dimen name="activity_horizontal_margin" >64dp
+                </dimen>
+            </file>
+            <file
+                name="pref_data_sync"
+                path="D:\GitHub\CameraD90\app\src\main\res\xml\pref_data_sync.xml"
+                qualifiers=""
+                type="xml" />
+            <file
+                name="pref_general"
+                path="D:\GitHub\CameraD90\app\src\main\res\xml\pref_general.xml"
+                qualifiers=""
+                type="xml" />
+            <file
+                name="pref_headers"
+                path="D:\GitHub\CameraD90\app\src\main\res\xml\pref_headers.xml"
+                qualifiers=""
+                type="xml" />
+            <file
+                name="pref_notification"
+                path="D:\GitHub\CameraD90\app\src\main\res\xml\pref_notification.xml"
+                qualifiers=""
+                type="xml" />
+            <file
+                name="settings"
+                path="D:\GitHub\CameraD90\app\src\main\res\xml\settings.xml"
+                qualifiers=""
+                type="xml" />
         </source>
-        <source path="E:\GitHub\CameraD90\app\build\generated\res\rs\debug" />
-        <source path="E:\GitHub\CameraD90\app\build\generated\res\generated\debug" />
+        <source path="D:\GitHub\CameraD90\app\build\generated\res\rs\debug" />
+        <source path="D:\GitHub\CameraD90\app\build\generated\res\generated\debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="E:\GitHub\CameraD90\app\src\debug\res" />
+        <source path="D:\GitHub\CameraD90\app\src\debug\res" />
     </dataSet>
 
 </merger>

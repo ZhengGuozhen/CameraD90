@@ -2,16 +2,16 @@
 <resources>
 
     <string-array name="video_bps_key">
-        <item>1000 kbps</item>
         <item>2000 kbps</item>
         <item>4000 kbps</item>
         <item>8000 kbps</item>
+        <item>16000 kbps</item>
     </string-array>
     <string-array name="video_bps_value">
-        <item>1000000</item>
         <item>2000000</item>
         <item>4000000</item>
         <item>8000000</item>
+        <item>16000000</item>
     </string-array>
 
     <string-array name="photo_size_key">
