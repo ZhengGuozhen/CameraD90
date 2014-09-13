@@ -890,8 +890,8 @@ public class MyActivity extends Activity
 
             //拍摄完成之后，才执行下面配置，避免曝光过程中取消对焦和曝光锁定！
             if(captureMode==1){
-                mCamera.cancelAutoFocus();
-                focusing = false;
+//                mCamera.cancelAutoFocus();
+//                focusing = false;
 
                 Camera.Parameters parameters = mCamera.getParameters();
                 parameters.setAutoExposureLock(false);
@@ -1431,6 +1431,10 @@ public class MyActivity extends Activity
     }
 
     private void takePhoto() {
+        if(focusing){
+            mCamera.cancelAutoFocus();
+            focusing = false;
+        }
         if (saving) {
             Toast.makeText(getApplicationContext(), "Saving",
                     Toast.LENGTH_SHORT).show();

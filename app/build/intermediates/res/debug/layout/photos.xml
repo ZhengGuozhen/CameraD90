@@ -2,7 +2,9 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:paddingBottom="48dp"
+    android:background="@android:color/black">
 
 
     <ImageView
@@ -16,26 +18,31 @@
     <Button
         android:layout_width="108dp"
         android:layout_height="96dp"
-        android:text="Previous"
+        android:text="&lt;"
+        android:textSize="50dp"
         android:id="@+id/button_previous"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
-        style="@style/AppTheme" />
+        android:background="@drawable/circle_button" />
     <Button
         android:layout_width="108dp"
         android:layout_height="96dp"
-        android:text="Next"
+        android:text="&gt;"
+        android:textSize="50dp"
         android:id="@+id/button_next"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:background="@drawable/circle_button" />
     <Button
         android:layout_width="108dp"
         android:layout_height="96dp"
-        android:text="Delete"
+        android:text="X"
+        android:textSize="50dp"
         android:id="@+id/button_delete"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_button" />
 
-</RelativeLayout><!-- From: file:/E:/GitHub/CameraD90/app/src/main/res/layout/photos.xml -->
+</RelativeLayout><!-- From: file:/D:/GitHub/CameraD90/app/src/main/res/layout/photos.xml -->

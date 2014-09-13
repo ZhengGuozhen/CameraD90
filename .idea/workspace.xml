@@ -17,7 +17,6 @@
     <shared>
       <config>
         <devices>
-          <device id="Nexus 5 Hardware Buttons" />
           <device id="Nexus 5" />
           <device id="Nexus One" />
           <device id="Nexus S" />
@@ -67,89 +66,119 @@
     <favorites_list name="CameraD90" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.48821548">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="MyActivity.java" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.55145633" vertical-offset="6876" max-vertical-offset="28440">
-                  <caret line="444" column="0" selection-start-line="444" selection-start-column="0" selection-end-line="444" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#20668#23361#0" expanded="true" />
-                    <element signature="e#23342#23343#0" expanded="true" />
-                    <element signature="e#23434#24277#0" expanded="true" />
-                    <element signature="e#24258#24259#0" expanded="true" />
-                    <element signature="e#24344#24730#0" expanded="true" />
-                    <element signature="e#24711#24712#0" expanded="true" />
-                    <element signature="e#24800#25349#0" expanded="true" />
-                    <element signature="e#25330#25331#0" expanded="true" />
-                    <element signature="e#25422#25971#0" expanded="true" />
-                    <element signature="e#25952#25953#0" expanded="true" />
-                    <element signature="e#26040#26430#0" expanded="true" />
-                    <element signature="e#26411#26412#0" expanded="true" />
-                    <element signature="e#26500#27215#0" expanded="true" />
-                    <element signature="e#27196#27197#0" expanded="true" />
-                    <element signature="e#27289#28485#0" expanded="true" />
-                    <element signature="e#28466#28467#0" expanded="true" />
-                    <element signature="e#28559#28935#0" expanded="true" />
-                    <element signature="e#28916#28917#0" expanded="true" />
-                    <element signature="e#29008#29194#0" expanded="true" />
-                    <element signature="e#29175#29176#0" expanded="true" />
-                    <element signature="e#29263#29448#0" expanded="true" />
-                    <element signature="e#29429#29430#0" expanded="true" />
-                    <element signature="e#29519#29706#0" expanded="true" />
-                    <element signature="e#29687#29688#0" expanded="true" />
-                    <element signature="e#29759#30045#0" expanded="true" />
-                    <element signature="e#30034#30035#0" expanded="true" />
-                    <element signature="e#30098#31910#0" expanded="true" />
-                    <element signature="e#30818#31665#0" expanded="true" />
-                    <element signature="e#31634#31635#0" expanded="true" />
-                    <element signature="e#31899#31900#0" expanded="true" />
-                    <element signature="e#37451#39842#0" expanded="true" />
-                    <element signature="e#39377#39553#0" expanded="true" />
-                    <element signature="e#39534#39535#0" expanded="true" />
-                    <element signature="e#39835#39836#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="activity_my.xml" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_my.xml">
-              <provider editor-type-id="android-designer">
-                <state />
-              </provider>
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-9.5" vertical-offset="2214" max-vertical-offset="3960">
-                  <caret line="124" column="12" selection-start-line="124" selection-start-column="12" selection-end-line="124" selection-end-column="12" />
-                  <folding>
-                    <element signature="e#7335#7651#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="MyActivity.java" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.8543689" vertical-offset="14900" max-vertical-offset="27420">
-                  <caret line="903" column="30" selection-start-line="903" selection-start-column="26" selection-end-line="903" selection-end-column="30" />
-                  <folding>
-                    <element signature="e#37451#39842#0" expanded="true" />
-                    <element signature="e#39835#39836#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="MyActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.8125" vertical-offset="5176" max-vertical-offset="20460">
+              <caret line="261" column="30" selection-start-line="261" selection-start-column="30" selection-end-line="261" selection-end-column="30" />
+              <folding>
+                <element signature="docComment;field#mNavigationDrawerFragment#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onDrawerSlide#0;class#9757:10244" expanded="false" />
+                <element signature="e#9959#9960#0" expanded="true" />
+                <element signature="e#10012#10013#0" expanded="true" />
+                <element signature="e#10087#10088#0" expanded="true" />
+                <element signature="e#10141#10142#0" expanded="true" />
+                <element signature="method#onDrawerStateChanged#0;class#9757:10244" expanded="false" />
+                <element signature="e#12716#12796#0" expanded="false" />
+                <element signature="e#18872#18935#0" expanded="false" />
+                <element signature="e#23715#23792#0" expanded="false" />
+                <element signature="e#28559#28935#0" expanded="true" />
+                <element signature="e#28916#28917#0" expanded="true" />
+                <element signature="e#30923#30941#0" expanded="false" />
+                <element signature="method#onNavigationDrawerItemSelected#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onResume#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#resumeCamera#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onPause#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#releaseMediaRecorder#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#releaseCamera#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#setDefaultCamera#0;class#MyActivity#0" expanded="false" />
+                <element signature="docComment;method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+                <element signature="docComment;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                <element signature="class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#CameraPreview#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                <element signature="e#35368#35431#0" expanded="false" />
+                <element signature="method#surfaceCreated#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#surfaceDestroyed#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#surfaceChanged#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                <element signature="e#36420#36506#0" expanded="false" />
+                <element signature="e#37646#37690#0" expanded="false" />
+                <element signature="method#DeletePhoto#0;class#MyActivity#0" expanded="false" />
+                <element signature="e#41041#41082#0" expanded="false" />
+                <element signature="method#setImage#0;class#MyActivity#0" expanded="false" />
+                <element signature="e#42944#42992#0" expanded="false" />
+                <element signature="docComment;method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+                <element signature="e#45366#45424#0" expanded="false" />
+                <element signature="e#45651#45722#0" expanded="false" />
+                <element signature="method#onAccuracyChanged#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onSensorChanged#0;class#MyActivity#0" expanded="false" />
+                <element signature="e#46880#46923#0" expanded="false" />
+                <element signature="method#setRotation#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#setVisible#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#setFocusArea#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#setMeteringArea#0;class#MyActivity#0" expanded="false" />
+                <element signature="docComment;method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#touch2camera#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#camera2touch#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#clamp#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#drawArea#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#drawArea1#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#drawArea2#0;class#MyActivity#0" expanded="false" />
+                <element signature="class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onSingleTapUp#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onFling#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onKeyDown#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#onKeyUp#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#takePhoto#0;class#MyActivity#0" expanded="false" />
+                <element signature="method#prepareVideoRecorder#0;class#MyActivity#0" expanded="false" />
+                <element signature="e#58661#58667#0" expanded="false" />
+                <element signature="e#59301#59367#0" expanded="false" />
+                <element signature="e#59801#59809#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_my.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_my.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.580646" vertical-offset="4620" max-vertical-offset="6060">
+              <caret line="167" column="44" selection-start-line="167" selection-start-column="44" selection-end-line="167" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NavigationDrawerFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/NavigationDrawerFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="8130">
+              <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="photos.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/photos.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.9825243" vertical-offset="694" max-vertical-offset="1590">
+              <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -575,7 +604,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4230976045108" />
+        <entry key="$PROJECT_DIR$" value="4228686771479" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -838,7 +867,6 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/photos.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/NavigationDrawerFragment.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/SettingsActivity.java" />
@@ -847,17 +875,18 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/array.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/over_button.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/circle_button.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_my.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/circle_button_trans.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_my.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/photos.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -885,6 +914,21 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CameraD90" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1135,22 +1179,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CameraD90" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="AndroidView" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1171,7 +1200,6 @@
     <property name="FullScreen" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="461" />
     <property name="LayoutCode.rearrangeEntriesXML" value="true" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="AVD_for_Xperia_Z2_by_Sony" />
   </component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
@@ -1383,7 +1411,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -1396,14 +1424,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3256617" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32834226" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32534248" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3256617" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.09229829" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25187165" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13691932" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3981588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1468,6 +1496,79 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="10740" max-vertical-offset="40380">
+          <caret line="444" column="0" selection-start-line="444" selection-start-column="0" selection-end-line="444" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;field#mNavigationDrawerFragment#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onDrawerSlide#0;class#9757:10244" expanded="false" />
+            <element signature="e#9959#9960#0" expanded="true" />
+            <element signature="e#10012#10013#0" expanded="true" />
+            <element signature="e#10087#10088#0" expanded="true" />
+            <element signature="e#10141#10142#0" expanded="true" />
+            <element signature="method#onDrawerStateChanged#0;class#9757:10244" expanded="false" />
+            <element signature="e#12716#12796#0" expanded="false" />
+            <element signature="e#18872#18935#0" expanded="false" />
+            <element signature="e#23715#23792#0" expanded="false" />
+            <element signature="e#28559#28935#0" expanded="true" />
+            <element signature="e#28916#28917#0" expanded="true" />
+            <element signature="e#30923#30941#0" expanded="false" />
+            <element signature="method#onNavigationDrawerItemSelected#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onResume#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#resumeCamera#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onPause#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#releaseMediaRecorder#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#releaseCamera#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setDefaultCamera#0;class#MyActivity#0" expanded="false" />
+            <element signature="docComment;method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+            <element signature="docComment;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#CameraPreview#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#35368#35431#0" expanded="false" />
+            <element signature="method#surfaceCreated#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#surfaceDestroyed#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#surfaceChanged#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#36420#36506#0" expanded="false" />
+            <element signature="e#37646#37690#0" expanded="false" />
+            <element signature="method#DeletePhoto#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#41041#41082#0" expanded="false" />
+            <element signature="method#setImage#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#42944#42992#0" expanded="false" />
+            <element signature="docComment;method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#45366#45424#0" expanded="false" />
+            <element signature="e#45651#45722#0" expanded="false" />
+            <element signature="method#onAccuracyChanged#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onSensorChanged#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#46880#46923#0" expanded="false" />
+            <element signature="method#setRotation#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setVisible#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setFocusArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setMeteringArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="docComment;method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#touch2camera#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#camera2touch#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#clamp#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#drawArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#drawArea1#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#drawArea2#0;class#MyActivity#0" expanded="false" />
+            <element signature="class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onSingleTapUp#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onFling#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onKeyDown#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onKeyUp#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#takePhoto#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#prepareVideoRecorder#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#58661#58667#0" expanded="false" />
+            <element signature="e#59301#59367#0" expanded="false" />
+            <element signature="e#59801#59809#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-20/android.jar!/android/content/res/Configuration.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2715" max-vertical-offset="4050">
@@ -1592,17 +1693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/photos.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9354838" vertical-offset="0" max-vertical-offset="1380">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-20/android.jar!/android/app/Fragment.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33272058" vertical-offset="1319" max-vertical-offset="5250">
@@ -1611,10 +1701,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/drawer_shadow.9.png">
-      <provider editor-type-id="images">
+      <provider selected="true" editor-type-id="ninepatcheditor">
         <state />
       </provider>
-      <provider selected="true" editor-type-id="ninepatcheditor">
+      <provider editor-type-id="images">
         <state />
       </provider>
     </entry>
@@ -1626,13 +1716,6 @@
         <state vertical-scroll-proportion="0.45627376" vertical-offset="0" max-vertical-offset="526">
           <caret line="8" column="48" selection-start-line="0" selection-start-column="3" selection-end-line="8" selection-end-column="48" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/NavigationDrawerFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.364452" vertical-offset="7393" max-vertical-offset="7950">
-          <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -1808,14 +1891,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/over_button.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="0" max-vertical-offset="840">
-          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/circle_button.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1904762" vertical-offset="0" max-vertical-offset="840">
@@ -1832,59 +1907,106 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.8125" vertical-offset="5176" max-vertical-offset="20460">
+          <caret line="261" column="30" selection-start-line="261" selection-start-column="30" selection-end-line="261" selection-end-column="30" />
+          <folding>
+            <element signature="docComment;field#mNavigationDrawerFragment#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onDrawerSlide#0;class#9757:10244" expanded="false" />
+            <element signature="e#9959#9960#0" expanded="true" />
+            <element signature="e#10012#10013#0" expanded="true" />
+            <element signature="e#10087#10088#0" expanded="true" />
+            <element signature="e#10141#10142#0" expanded="true" />
+            <element signature="method#onDrawerStateChanged#0;class#9757:10244" expanded="false" />
+            <element signature="e#12716#12796#0" expanded="false" />
+            <element signature="e#18872#18935#0" expanded="false" />
+            <element signature="e#23715#23792#0" expanded="false" />
+            <element signature="e#28559#28935#0" expanded="true" />
+            <element signature="e#28916#28917#0" expanded="true" />
+            <element signature="e#30923#30941#0" expanded="false" />
+            <element signature="method#onNavigationDrawerItemSelected#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onResume#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#resumeCamera#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onPause#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#releaseMediaRecorder#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#releaseCamera#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setDefaultCamera#0;class#MyActivity#0" expanded="false" />
+            <element signature="docComment;method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+            <element signature="docComment;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#CameraPreview#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#35368#35431#0" expanded="false" />
+            <element signature="method#surfaceCreated#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#surfaceDestroyed#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#surfaceChanged#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#36420#36506#0" expanded="false" />
+            <element signature="e#37646#37690#0" expanded="false" />
+            <element signature="method#DeletePhoto#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#41041#41082#0" expanded="false" />
+            <element signature="method#setImage#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#42944#42992#0" expanded="false" />
+            <element signature="docComment;method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#45366#45424#0" expanded="false" />
+            <element signature="e#45651#45722#0" expanded="false" />
+            <element signature="method#onAccuracyChanged#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onSensorChanged#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#46880#46923#0" expanded="false" />
+            <element signature="method#setRotation#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setVisible#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setFocusArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#setMeteringArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="docComment;method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#touch2camera#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#camera2touch#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#clamp#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#drawArea#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#drawArea1#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#drawArea2#0;class#MyActivity#0" expanded="false" />
+            <element signature="class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onSingleTapUp#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onFling#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onKeyDown#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#onKeyUp#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#takePhoto#0;class#MyActivity#0" expanded="false" />
+            <element signature="method#prepareVideoRecorder#0;class#MyActivity#0" expanded="false" />
+            <element signature="e#58661#58667#0" expanded="false" />
+            <element signature="e#59301#59367#0" expanded="false" />
+            <element signature="e#59801#59809#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/NavigationDrawerFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="960" max-vertical-offset="8130">
+          <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_my.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.5" vertical-offset="2214" max-vertical-offset="3960">
-          <caret line="124" column="12" selection-start-line="124" selection-start-column="12" selection-end-line="124" selection-end-column="12" />
-          <folding>
-            <element signature="e#7335#7651#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="-12.580646" vertical-offset="4620" max-vertical-offset="6060">
+          <caret line="167" column="44" selection-start-line="167" selection-start-column="44" selection-end-line="167" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/photos.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.55145633" vertical-offset="6876" max-vertical-offset="28440">
-          <caret line="444" column="0" selection-start-line="444" selection-start-column="0" selection-end-line="444" selection-end-column="0" />
-          <folding>
-            <element signature="e#20668#23361#0" expanded="true" />
-            <element signature="e#23342#23343#0" expanded="true" />
-            <element signature="e#23434#24277#0" expanded="true" />
-            <element signature="e#24258#24259#0" expanded="true" />
-            <element signature="e#24344#24730#0" expanded="true" />
-            <element signature="e#24711#24712#0" expanded="true" />
-            <element signature="e#24800#25349#0" expanded="true" />
-            <element signature="e#25330#25331#0" expanded="true" />
-            <element signature="e#25422#25971#0" expanded="true" />
-            <element signature="e#25952#25953#0" expanded="true" />
-            <element signature="e#26040#26430#0" expanded="true" />
-            <element signature="e#26411#26412#0" expanded="true" />
-            <element signature="e#26500#27215#0" expanded="true" />
-            <element signature="e#27196#27197#0" expanded="true" />
-            <element signature="e#27289#28485#0" expanded="true" />
-            <element signature="e#28466#28467#0" expanded="true" />
-            <element signature="e#28559#28935#0" expanded="true" />
-            <element signature="e#28916#28917#0" expanded="true" />
-            <element signature="e#29008#29194#0" expanded="true" />
-            <element signature="e#29175#29176#0" expanded="true" />
-            <element signature="e#29263#29448#0" expanded="true" />
-            <element signature="e#29429#29430#0" expanded="true" />
-            <element signature="e#29519#29706#0" expanded="true" />
-            <element signature="e#29687#29688#0" expanded="true" />
-            <element signature="e#29759#30045#0" expanded="true" />
-            <element signature="e#30034#30035#0" expanded="true" />
-            <element signature="e#30098#31910#0" expanded="true" />
-            <element signature="e#30818#31665#0" expanded="true" />
-            <element signature="e#31634#31635#0" expanded="true" />
-            <element signature="e#31899#31900#0" expanded="true" />
-            <element signature="e#37451#39842#0" expanded="true" />
-            <element signature="e#39377#39553#0" expanded="true" />
-            <element signature="e#39534#39535#0" expanded="true" />
-            <element signature="e#39835#39836#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.9825243" vertical-offset="694" max-vertical-offset="1590">
+          <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
