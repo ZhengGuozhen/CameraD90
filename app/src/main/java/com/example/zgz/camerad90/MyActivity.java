@@ -268,6 +268,54 @@ public class MyActivity extends Activity
             }
         });
 
+        //自动聚焦变量回调
+        myAutoFocusCallback = new Camera.AutoFocusCallback() {
+            public void onAutoFocus(boolean success, Camera camera) {
+                // TODO Auto-generated method stub
+                focusing = false;
+
+                ivFocus.clearAnimation();
+                Camera.Parameters parameters = mCamera.getParameters();
+
+                if (success)//success表示对焦成功
+                {
+                    //myCamera.setOneShotPreviewCallback(null);
+                    drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.GREEN);
+
+                    switch (captureMode) {
+                        case 0:
+                            break;
+
+                        case 1:
+                            new Handler().postDelayed(new Runnable() {
+                                public void run() {
+                                    //execute the task
+                                    //对焦成功后,曝光设置会稍微偏高，若立即锁定曝光会导致轻微过曝，因此延迟200ms，等曝光设置正常后再锁定曝光
+                                    //猜测，环境较暗时对焦，相机会自动把曝光值调高方便对焦，对焦完成后再调回正常值。
+                                    //所以暗环境下如果对焦成功后立刻锁定曝光，会导致轻微过曝
+                                    //可以在对焦完成后等待200ms（实际测试得出，150ms仍会导致过曝，200ms正常），等曝光设置正常后再锁定对焦，即可得到正常曝光
+                                    Camera.Parameters parameters1 = mCamera.getParameters();
+                                    parameters1.setAutoExposureLock(true);
+                                    mCamera.setParameters(parameters1);
+                                    button_lock.setVisibility(View.VISIBLE);
+
+                                }
+                            }, 200);
+
+                            break;
+                    }
+                } else//未对焦成功
+                {
+                    drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.RED);
+                }
+            }
+        };
+
+        setUI();
+
+    }
+
+    private void setUI(){
         ivFocus.setOnTouchListener(
                 new View.OnTouchListener() {
                     @Override
@@ -676,49 +724,6 @@ public class MyActivity extends Activity
             }
         });
 
-        //自动聚焦变量回调
-        myAutoFocusCallback = new Camera.AutoFocusCallback() {
-            public void onAutoFocus(boolean success, Camera camera) {
-                // TODO Auto-generated method stub
-                focusing = false;
-
-                ivFocus.clearAnimation();
-                Camera.Parameters parameters = mCamera.getParameters();
-
-                if (success)//success表示对焦成功
-                {
-                    //myCamera.setOneShotPreviewCallback(null);
-                    drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.GREEN);
-
-                    switch (captureMode) {
-                        case 0:
-                            break;
-
-                        case 1:
-                            new Handler().postDelayed(new Runnable() {
-                                public void run() {
-                                    //execute the task
-                                    //对焦成功后,曝光设置会稍微偏高，若立即锁定曝光会导致轻微过曝，因此延迟200ms，等曝光设置正常后再锁定曝光
-                                    //猜测，环境较暗时对焦，相机会自动把曝光值调高方便对焦，对焦完成后再调回正常值。
-                                    //所以暗环境下如果对焦成功后立刻锁定曝光，会导致轻微过曝
-                                    //可以在对焦完成后等待200ms（实际测试得出，150ms仍会导致过曝，200ms正常），等曝光设置正常后再锁定对焦，即可得到正常曝光
-                                    Camera.Parameters parameters1 = mCamera.getParameters();
-                                    parameters1.setAutoExposureLock(true);
-                                    mCamera.setParameters(parameters1);
-                                    button_lock.setVisibility(View.VISIBLE);
-
-                                }
-                            }, 200);
-
-                            break;
-                    }
-                } else//未对焦成功
-                {
-                    drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.RED);
-                }
-            }
-        };
-
     }
 
     @Override
@@ -797,6 +802,9 @@ public class MyActivity extends Activity
         }else if(photo_size.equals("300")){
             params.setPictureSize(2048, 1536);
         }
+
+        String jpeg_quality=mSharedPreferences.getString("jpeg_quality","85");
+        params.setJpegQuality(Integer.parseInt(jpeg_quality));
 
         String video_bps=mSharedPreferences.getString("video_bps","8000000");
         VideoBitRate=Integer.parseInt(video_bps);
@@ -1022,7 +1030,6 @@ public class MyActivity extends Activity
         builder.show();
 
     }
-
 
     private void setImage(int i) {
 

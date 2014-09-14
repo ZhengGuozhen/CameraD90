@@ -10,7 +10,14 @@
             android:key="photo_size"
             android:title="Photo Size">
             </ListPreference>
-
+        <EditTextPreference
+            android:key="jpeg_quality"
+            android:title="JPEG Quality"
+            android:defaultValue="85"
+            android:selectAllOnFocus="true"
+            android:inputType="number"
+            android:singleLine="true"
+            android:maxLines="1" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Video Settings">
@@ -21,7 +28,6 @@
             android:key="video_bps"
             android:title="Video bps">
             </ListPreference>
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="About">

@@ -8,41 +8,40 @@
 
 
     <ImageView
-        android:layout_marginTop="10dp"
         android:layout_width="360dp"
         android:layout_height="480dp"
         android:id="@+id/imageView_review"
         android:src="@drawable/ic_launcher"
         android:scaleType="fitCenter" />
 
-    <Button
-        android:layout_width="108dp"
-        android:layout_height="96dp"
-        android:text="&lt;"
-        android:textSize="50dp"
-        android:id="@+id/button_previous"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/circle_button" />
-    <Button
-        android:layout_width="108dp"
-        android:layout_height="96dp"
-        android:text="&gt;"
-        android:textSize="50dp"
-        android:id="@+id/button_next"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/circle_button" />
-    <Button
-        android:layout_width="108dp"
-        android:layout_height="96dp"
-        android:text="X"
-        android:textSize="50dp"
-        android:id="@+id/button_delete"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_button" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="64dp"
+            android:text="&lt;"
+            android:textSize="50sp"
+            android:id="@+id/button_previous" />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="64dp"
+            android:text="&gt;"
+            android:textSize="50sp"
+            android:id="@+id/button_next" />
+        <Button
+            android:layout_weight="1"
+            android:layout_width="50dp"
+            android:layout_height="64dp"
+            android:text="X"
+            android:textSize="50sp"
+            android:id="@+id/button_delete" />
+
+        </LinearLayout>
+
 
 </RelativeLayout><!-- From: file:/D:/GitHub/CameraD90/app/src/main/res/layout/photos.xml -->
