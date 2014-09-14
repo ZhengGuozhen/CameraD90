@@ -110,7 +110,7 @@ public class NavigationDrawerFragment extends Fragment {
 //                }));
 //        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 //        return mDrawerListView;
-        return (RelativeLayout) inflater.inflate(R.layout.photos, container, false);
+        return (RelativeLayout) inflater.inflate(R.layout.review_fake, container, false);
     }
 
     public boolean isDrawerOpen() {

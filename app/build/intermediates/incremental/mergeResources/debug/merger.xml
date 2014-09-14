@@ -92,11 +92,6 @@
                 qualifiers=""
                 type="layout" />
             <file
-                name="photos"
-                path="D:\GitHub\CameraD90\app\src\main\res\layout\photos.xml"
-                qualifiers=""
-                type="layout" />
-            <file
                 name="global"
                 path="D:\GitHub\CameraD90\app\src\main\res\menu\global.xml"
                 qualifiers=""
@@ -336,6 +331,11 @@ Never
                 path="D:\GitHub\CameraD90\app\src\main\res\xml\settings.xml"
                 qualifiers=""
                 type="xml" />
+            <file
+                name="review_fake"
+                path="D:\GitHub\CameraD90\app\src\main\res\layout\review_fake.xml"
+                qualifiers=""
+                type="layout" />
         </source>
         <source path="D:\GitHub\CameraD90\app\build\generated\res\rs\debug" />
         <source path="D:\GitHub\CameraD90\app\build\generated\res\generated\debug" />

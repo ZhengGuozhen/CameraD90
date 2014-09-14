@@ -40,6 +40,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -123,23 +124,31 @@ public class MyActivity extends Activity
     private Button button_focusMode;
     private Button button_close;
 
+    private RelativeLayout layout_review;
     private ImageView imageView_review;
+    private ImageView imageView_review_fake;
     private Button button_previous;
     private Button button_delete;
     private Button button_next;
+    private Button button_back;
 
     private RelativeLayout layout_buttons;
     private RelativeLayout layout_draw;
 
+    private PointF tapPoint = new PointF();//用于ivFocus的onSingleTapUp
+
+    //以下变量用于ivFocus.setOnTouchListener
     private static final int NONE = 0;
     private static final int MOVE = 1;
     private static final int ZOOM = 2;
     private int mode = NONE;
     private PointF start = new PointF();
     private PointF mid = new PointF();
-    private PointF tapPoint = new PointF();
     private float oldDistance;
     private int startZoom;
+
+    //以下变量用于imageView_review.setOnTouchListener
+    private PointF start1 = new PointF();
 
     private int captureMode = 0;
     private boolean focusing = false;
@@ -219,10 +228,13 @@ public class MyActivity extends Activity
         button_shutter = (Button) findViewById(R.id.button_shutter);
         button_lock = (Button) findViewById(R.id.button_lock);
 
+        layout_review=(RelativeLayout)findViewById(R.id.layout_review);
         imageView_review = (ImageView) findViewById(R.id.imageView_review);
+        imageView_review_fake = (ImageView) findViewById(R.id.imageView_review_fake);
         button_previous = (Button) findViewById(R.id.button_previous);
         button_delete = (Button) findViewById(R.id.button_delete);
         button_next = (Button) findViewById(R.id.button_next);
+        button_back = (Button) findViewById(R.id.button_back);
 
         button_flash = (Button) findViewById(R.id.button_flash);
         layout_buttons = (RelativeLayout) findViewById(R.id.layout_buttons);
@@ -255,6 +267,7 @@ public class MyActivity extends Activity
             @Override
             public void onDrawerOpened(View view) {
                 mCamera.stopPreview();
+                layout_review.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -432,13 +445,12 @@ public class MyActivity extends Activity
                             params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
                             mCamera.setParameters(params);
 
-                            focusing=false;
-                            saving=false;
+                            focusing = false;
+                            saving = false;
 
 
-
-                            previewMaxX=1080;
-                            previewMaxY=1440;
+                            previewMaxX = 1080;
+                            previewMaxY = 1440;
                             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
                             layoutParams.width = (int) previewMaxX;
                             layoutParams.height = (int) previewMaxY;
@@ -448,16 +460,15 @@ public class MyActivity extends Activity
                             drawArea2(ivFocus);
                             setVisible(View.INVISIBLE);
 
-                            previewMaxX=1080;
-                            previewMaxY=1920;
+                            previewMaxX = 1080;
+                            previewMaxY = 1920;
                             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
                             layoutParams.width = (int) previewMaxX;
                             layoutParams.height = (int) previewMaxY;
                             layout_draw.setLayoutParams(layoutParams);
 
-                            focusing=true;
-                            saving=true;
-
+                            focusing = true;
+                            saving = true;
 
 
                             //prepareVideoRecorder之前必须releaseCamera
@@ -544,7 +555,7 @@ public class MyActivity extends Activity
                                 //手指松开拍照，手指滑出按钮后松开则取消拍照
                                 if (x > 0 && x < xx && y > 0 && y < yy) {
                                     takePhoto();
-                                }else{
+                                } else {
                                     mCamera.cancelAutoFocus();
                                     focusing = false;
 
@@ -676,16 +687,44 @@ public class MyActivity extends Activity
                 }
         );
 
-        imageView_review.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);//调用android的图库
-                        startActivity(intent);
-                    }
-                }
-        );
+//        findViewById(R.id.imageView_review_zoom).setOnTouchListener(
+//                new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//
+//                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+//                            case MotionEvent.ACTION_DOWN:
+//                                start1.set(event.getX(),event.getY());
+//                                break;
+//                            case MotionEvent.ACTION_UP:
+//
+//                                break;
+//
+//                            case MotionEvent.ACTION_MOVE:
+//                                RectF zoomArea=new RectF();
+//                                zoomArea.left=start1.x;
+//                                zoomArea.top=start1.y;
+//                                zoomArea.right=event.getX();
+//                                zoomArea.bottom=event.getY();
+//
+//                                drawArea1((ImageView)findViewById(R.id.imageView_review_zoom),zoomArea,Color.GREEN);
+//                                break;
+//                        }
+//
+//                        return true;
+//                    }
+//                }
+//        );
+
+        findViewById(R.id.imageView_review).setOnTouchListener(new mTouchListener());
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layout_review.setVisibility(View.INVISIBLE);
+                mDrawerLayout.closeDrawers();
+            }
+        });
 
         button_previous.setOnClickListener(
                 new View.OnClickListener() {
@@ -736,7 +775,6 @@ public class MyActivity extends Activity
     protected void onResume() {
         super.onResume();
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        mDrawerLayout.closeDrawers();
 
         resumeCamera();
         setDefaultCamera();
@@ -1013,6 +1051,7 @@ public class MyActivity extends Activity
                     }
 
                     imageView_review.setImageBitmap(bitmap);
+                    imageView_review_fake.setImageBitmap(bitmap);
 
                 }
             }
@@ -1065,27 +1104,73 @@ public class MyActivity extends Activity
             //mCursor.close();
             if (filePath != null) {
                 //只解析为原图的inSampleSize分之一
+
+                float windowWidth = previewMaxX;
+                float windowHeight = previewMaxY;
+
                 BitmapFactory.Options opts = new BitmapFactory.Options();
+
+                //设置解析器不去真正的解析这个位图，而是解析这个图片的out输出信息(宽度，高度)，不会为图片的每个点申请内在空间
+                opts.inJustDecodeBounds = true;
+                //得到图片的宽高信息
+                BitmapFactory.decodeFile(filePath,opts);
+
+                int picWidth = opts.outWidth;
+                int picHeight = opts.outHeight;
+                if (orientation != null && !"".equals(orientation)) {
+                   if(Integer.parseInt(orientation) != 0){
+                       picWidth = opts.outHeight;
+                       picHeight = opts.outWidth;
+                   }
+                }
+
+                //得到缩放比例
+                float scaleX = picWidth/windowWidth;
+                float scaleY = picHeight/windowHeight;
+                //确定缩放比例
+                float inSampleSize = 1;
+                if(scaleX > scaleY){
+                    inSampleSize = scaleX;
+                }else{
+                    inSampleSize = scaleY;
+                }
+
+                //真正的解析这个图片
                 opts.inJustDecodeBounds = false;
-                opts.inSampleSize = IN_SAMPLE_SIZE;
+                opts.inSampleSize = Math.round(inSampleSize);
                 Bitmap bitmap = BitmapFactory.decodeFile(filePath, opts);//根据Path读取资源图片
 
+                Matrix matrix = new Matrix();
                 int angle = 0;
                 if (orientation != null && !"".equals(orientation)) {
                     angle = Integer.parseInt(orientation);
                 }
                 if (angle != 0) {
                     // 下面的方法主要作用是把图片转一个角度，也可以放大缩小等
-                    Matrix m = new Matrix();
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
-                    m.setRotate(angle); // 旋转angle度
-                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height,
-                            m, true);// 从新生成图片
-
+                    matrix.postRotate(angle); // 旋转angle度
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, m, true);// 从新生成图片
                 }
 
+//                Matrix matrix = new Matrix();
+                float scale;
+                float realInSampleSize = Math.round(inSampleSize);
+                if(windowWidth/(picWidth/inSampleSize) > windowHeight/(picHeight/inSampleSize)){
+                    scale = windowHeight/(picHeight/inSampleSize);
+                }else{
+                    scale = windowWidth/(picWidth/inSampleSize);
+                }
+                matrix.postScale(scale, scale,0,0);
+
+//                float dx = previewMaxX/2-bitmap.getWidth()*scale/2;
+//                float dy = previewMaxY/2-bitmap.getHeight()*scale/2;
+//                matrix.postTranslate(dx, dy);
+
+                imageView_review.setImageMatrix(matrix);
+
                 imageView_review.setImageBitmap(bitmap);
+                imageView_review_fake.setImageBitmap(bitmap);
 
             }
         }
@@ -1176,9 +1261,11 @@ public class MyActivity extends Activity
         button_close.setRotation(r);
 
         imageView_review.setRotation(r);
+        imageView_review_fake.setRotation(r);
         button_previous.setRotation(r);
         button_delete.setRotation(r);
         button_next.setRotation(r);
+        button_back.setRotation(r);
     }
 
     private void setVisible(int r) {
@@ -1194,10 +1281,6 @@ public class MyActivity extends Activity
         button_settings.setVisibility(r);
         button_focusMode.setVisibility(r);
 
-        imageView_review.setVisibility(r);
-        button_previous.setVisibility(r);
-        button_delete.setVisibility(r);
-        button_next.setVisibility(r);
     }
 
 
@@ -1524,6 +1607,98 @@ public class MyActivity extends Activity
             return false;
         }
         return true;
+    }
+
+    private final class mTouchListener implements View.OnTouchListener {
+
+        /** 记录是拖拉照片模式还是放大缩小照片模式 */
+        private int mode = 0;// 初始状态
+        /** 拖拉照片模式 */
+        private static final int MODE_DRAG = 1;
+        /** 放大缩小照片模式 */
+        private static final int MODE_ZOOM = 2;
+
+        /** 用于记录开始时候的坐标位置 */
+        private PointF startPoint = new PointF();
+        /** 用于记录拖拉图片移动的坐标位置 */
+        private Matrix matrix = new Matrix();
+        /** 用于记录图片要进行拖拉时候的坐标位置 */
+        private Matrix currentMatrix = new Matrix();
+
+        /** 两个手指的开始距离 */
+        private float startDis;
+        /** 两个手指的中间点 */
+        private PointF midPoint;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            /** 通过与运算保留最后八位 MotionEvent.ACTION_MASK = 255 */
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                // 手指压下屏幕
+                case MotionEvent.ACTION_DOWN:
+                    mode = MODE_DRAG;
+                    // 记录ImageView当前的移动位置
+                    currentMatrix.set(imageView_review.getImageMatrix());
+                    startPoint.set(event.getX(), event.getY());
+                    break;
+                // 手指在屏幕上移动，改事件会被不断触发
+                case MotionEvent.ACTION_MOVE:
+                    // 拖拉图片
+                    if (mode == MODE_DRAG) {
+                        float dx = event.getX() - startPoint.x; // 得到x轴的移动距离
+                        float dy = event.getY() - startPoint.y; // 得到x轴的移动距离
+                        // 在没有移动之前的位置上进行移动
+                        matrix.set(currentMatrix);
+                        matrix.postTranslate(dx, dy);
+                    }
+                    // 放大缩小图片
+                    else if (mode == MODE_ZOOM) {
+                        float endDis = distance(event);// 结束距离
+                        if (endDis > 10f) { // 两个手指并拢在一起的时候像素大于10
+                            float scale = endDis / startDis;// 得到缩放倍数
+                            matrix.set(currentMatrix);
+                            matrix.postScale(scale, scale,midPoint.x,midPoint.y);
+                        }
+                    }
+                    break;
+                // 手指离开屏幕
+                case MotionEvent.ACTION_UP:
+                    // 当触点离开屏幕，但是屏幕上还有触点(手指)
+                case MotionEvent.ACTION_POINTER_UP:
+                    mode = 0;
+                    break;
+                // 当屏幕上已经有触点(手指)，再有一个触点压下屏幕
+                case MotionEvent.ACTION_POINTER_DOWN:
+                    mode = MODE_ZOOM;
+                    /** 计算两个手指间的距离 */
+                    startDis = distance(event);
+                    /** 计算两个手指间的中间点 */
+                    if (startDis > 10f) { // 两个手指并拢在一起的时候像素大于10
+                        midPoint = mid(event);
+                        //记录当前ImageView的缩放倍数
+                        currentMatrix.set(imageView_review.getImageMatrix());
+                    }
+                    break;
+            }
+            imageView_review.setImageMatrix(matrix);
+            return true;
+        }
+
+        /** 计算两个手指间的距离 */
+        private float distance(MotionEvent event) {
+            float dx = event.getX(1) - event.getX(0);
+            float dy = event.getY(1) - event.getY(0);
+            /** 使用勾股定理返回两点之间的距离 */
+            return FloatMath.sqrt(dx * dx + dy * dy);
+        }
+
+        /** 计算两个手指间的中间点 */
+        private PointF mid(MotionEvent event) {
+            float midX = (event.getX(1) + event.getX(0)) / 2;
+            float midY = (event.getY(1) + event.getY(0)) / 2;
+            return new PointF(midX, midY);
+        }
+
     }
 
 

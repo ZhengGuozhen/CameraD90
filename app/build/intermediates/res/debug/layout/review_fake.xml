@@ -10,11 +10,12 @@
     <ImageView
         android:layout_width="360dp"
         android:layout_height="480dp"
-        android:id="@+id/imageView_review"
         android:src="@drawable/ic_launcher"
+        android:id="@+id/imageView_review_fake"
         android:scaleType="fitCenter" />
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
@@ -24,24 +25,21 @@
             android:layout_width="50dp"
             android:layout_height="64dp"
             android:text="&lt;"
-            android:textSize="50sp"
-            android:id="@+id/button_previous" />
+            android:textSize="50sp" />
         <Button
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="64dp"
             android:text="&gt;"
-            android:textSize="50sp"
-            android:id="@+id/button_next" />
+            android:textSize="50sp" />
         <Button
             android:layout_weight="1"
             android:layout_width="50dp"
             android:layout_height="64dp"
             android:text="X"
-            android:textSize="50sp"
-            android:id="@+id/button_delete" />
+            android:textSize="50sp" />
 
         </LinearLayout>
 
 
-</RelativeLayout><!-- From: file:/D:/GitHub/CameraD90/app/src/main/res/layout/photos.xml -->
+</RelativeLayout><!-- From: file:/D:/GitHub/CameraD90/app/src/main/res/layout/review_fake.xml -->
