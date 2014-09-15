@@ -106,8 +106,8 @@ public class MyActivity extends Activity
     private MediaRecorder mMediaRecorder;
     private SensorManager mSensorManager;
     private Sensor mSensor;
-    private int photoDegree = 0;
-    private int oldPhotoDegree = 90;//表示竖屏
+    private int photoDegree = 90;//0表示横屏，90表示竖屏
+    private int oldPhotoDegree = 90;//0表示横屏，90表示竖屏
     private GestureDetectorCompat mDetector;
     private ImageView ivFocus;
     private ImageView ivMetering;
@@ -132,7 +132,9 @@ public class MyActivity extends Activity
     private Button button_delete;
     private Button button_next;
     private Button button_back;
-    private int photo_angle;//标识当前显示的图片的方向信息
+    private int photo_angle;//标识当前显示的图片的方向信息,90表示竖拍照片，0表示横拍照片
+    private int photo_width;//标识当前显示的图片的信息
+    private int photo_height;//标识当前显示的图片的信息
 
     private RelativeLayout layout_buttons;
     private RelativeLayout layout_draw;
@@ -730,20 +732,34 @@ public class MyActivity extends Activity
             }
         });
 
-        button_previous.setOnClickListener(
-                new View.OnClickListener() {
+        button_previous.setOnTouchListener(
+                new View.OnTouchListener() {
                     @Override
-                    public void onClick(View v) {
-                        setImage(-1);
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                            case MotionEvent.ACTION_DOWN:
+                                setImage(-1);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                break;
+                        }
+                        return true;
                     }
                 }
         );
 
-        button_next.setOnClickListener(
-                new View.OnClickListener() {
+        button_next.setOnTouchListener(
+                new View.OnTouchListener() {
                     @Override
-                    public void onClick(View v) {
-                        setImage(1);
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                            case MotionEvent.ACTION_DOWN:
+                                setImage(1);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                break;
+                        }
+                        return true;
                     }
                 }
         );
@@ -1104,7 +1120,7 @@ public class MyActivity extends Activity
             //cursor.moveToFirst();// 把游标移动到首位，因为这里的Uri是包含ID的所以是唯一的不需要循环找指向第一个就是了
             String filePath = mCursor.getString(mCursor.getColumnIndex("_data"));// 获取图片路
             String orientation = mCursor.getString(mCursor.getColumnIndex("orientation"));// 获取旋转的角度
-            //mCursor.close();
+            mCursor.close();
             photo_angle = 0;
             if (orientation != null && !"".equals(orientation)) {
                 photo_angle = Integer.parseInt(orientation);
@@ -1124,57 +1140,79 @@ public class MyActivity extends Activity
                 imageView_review.setImageBitmap(bitmap);
                 imageView_review_fake.setImageBitmap(bitmap);
 
-
+                photo_width = bitmap.getWidth();
+                photo_height = bitmap.getHeight();
 
                 Matrix matrix = new Matrix();
-
-                //获取imageView的大小
-                float windowWidth = previewMaxX;
-                float windowHeight = previewMaxY;
-
-                int picWidth = bitmap.getWidth();
-                int picHeight = bitmap.getHeight();
-                //解析的图片是没有旋转的，竖拍的照片须要将宽高反转
-                if (orientation != null && !"".equals(orientation)) {
-                   if(Integer.parseInt(orientation) != 0){
-                       picWidth = bitmap.getHeight();
-                       picHeight = bitmap.getWidth();
-                   }
+                if(photoDegree == 90) {
+                    //竖屏
+                    matrix = imageCenter(previewMaxX, previewMaxY,
+                            photo_width, photo_height, 0);
+                }else if(photoDegree == 0){
+                    //横屏
+                    matrix = imageCenter(previewMaxY, previewMaxX,
+                            photo_width, photo_height, 1);
                 }
-
-                //得到缩放比例
-                float scaleX = windowWidth/picWidth;
-                float scaleY = windowHeight/picHeight;
-                //确定缩放比例
-                float scale = 1;
-                if(scaleX < scaleY){
-                    scale = scaleX;
-                }else{
-                    scale = scaleY;
-                }
-                matrix.postScale(scale, scale,0,0);
-
-                // 把图片转一个角度,解决竖拍照片方向问题,同时使图片居中
-                float dx = 0;
-                float dy = 0;
-
-                if (photo_angle != 0) {
-                    matrix.postRotate(photo_angle); // 旋转angle度
-                    dx = windowWidth/2+picWidth*scale/2;
-                    dy = windowHeight/2-picHeight*scale/2;
-//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, m, true);// 从新生成图片
-                }else{
-                    dx = windowWidth/2-picWidth*scale/2;
-                    dy = windowHeight/2-picHeight*scale/2;
-                }
-                matrix.postTranslate(dx, dy);
 
                 imageView_review.setImageMatrix(matrix);
                 imageView_review_fake.setImageMatrix(matrix);
-
-
             }
         }
+    }
+
+    //计算一个matrix使imageView中的图片缩放居中
+    private Matrix imageCenter(float windowWidth, float windowHeight,
+                               int picWidth, int picHeight, int mode){
+        Matrix matrix = new Matrix();
+
+        //解析的图片是没有旋转的，竖拍的照片须要将宽高反转
+        if (photo_angle!=0) {
+            int temp = picWidth;
+            picWidth = picHeight;
+            picHeight = temp;
+        }
+
+        //得到缩放比例
+        float scaleX = windowWidth/picWidth;
+        float scaleY = windowHeight/picHeight;
+        //确定缩放比例
+        float scale = 1;
+        if(scaleX < scaleY){
+            scale = scaleX;
+        }else{
+            scale = scaleY;
+        }
+        matrix.postScale(scale, scale,0,0);
+
+        // 把图片转一个角度,解决竖拍照片方向问题,同时使图片居中
+        float dx = 0;
+        float dy = 0;
+
+        if(mode==0){
+            //竖屏情况
+            if (photo_angle != 0) {
+                matrix.postRotate(90); // 旋转angle度
+                dx = windowWidth/2+picWidth*scale/2;
+                dy = windowHeight/2-picHeight*scale/2;
+            }else{
+                dx = windowWidth/2-picWidth*scale/2;
+                dy = windowHeight/2-picHeight*scale/2;
+            }
+            matrix.postTranslate(dx, dy);
+        }else if(mode==1){
+            //横屏情况
+            if (photo_angle != 0) {
+                matrix.postRotate(180);
+                dx = windowHeight/2+picHeight*scale/2;
+                dy = windowWidth/2+picWidth*scale/2;
+            }else{
+                matrix.postRotate(90);
+                dx = windowHeight/2+picHeight*scale/2;
+                dy = windowWidth/2-picWidth*scale/2;
+            }
+            matrix.postTranslate(dx, dy);
+        }
+        return matrix;
     }
 
     //获取opts.inSampleSize
@@ -1315,7 +1353,11 @@ public class MyActivity extends Activity
 
         //这两个控件不旋转，里面的图片旋转
         Matrix matrix = new Matrix();
-        matrix.postRotate(r);
+        if(r==90){
+            matrix = imageCenter(previewMaxY,previewMaxX,photo_width, photo_height, 1);
+        }else if(r==0){
+            matrix = imageCenter(previewMaxX,previewMaxY,photo_width, photo_height, 0);
+        }
         imageView_review.setImageMatrix(matrix);
         imageView_review_fake.setImageMatrix(matrix);
 
