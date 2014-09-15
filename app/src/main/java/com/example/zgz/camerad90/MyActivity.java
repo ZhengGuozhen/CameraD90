@@ -126,11 +126,13 @@ public class MyActivity extends Activity
 
     private RelativeLayout layout_review;
     private ImageView imageView_review;
+    private ImageView imageView_review_zoom;
     private ImageView imageView_review_fake;
     private Button button_previous;
     private Button button_delete;
     private Button button_next;
     private Button button_back;
+    private int photo_angle;//标识当前显示的图片的方向信息
 
     private RelativeLayout layout_buttons;
     private RelativeLayout layout_draw;
@@ -230,11 +232,13 @@ public class MyActivity extends Activity
 
         layout_review=(RelativeLayout)findViewById(R.id.layout_review);
         imageView_review = (ImageView) findViewById(R.id.imageView_review);
+        imageView_review_zoom = (ImageView) findViewById(R.id.imageView_review_zoom);
         imageView_review_fake = (ImageView) findViewById(R.id.imageView_review_fake);
         button_previous = (Button) findViewById(R.id.button_previous);
         button_delete = (Button) findViewById(R.id.button_delete);
         button_next = (Button) findViewById(R.id.button_next);
         button_back = (Button) findViewById(R.id.button_back);
+        photo_angle = 0;
 
         button_flash = (Button) findViewById(R.id.button_flash);
         layout_buttons = (RelativeLayout) findViewById(R.id.layout_buttons);
@@ -687,7 +691,7 @@ public class MyActivity extends Activity
                 }
         );
 
-//        findViewById(R.id.imageView_review_zoom).setOnTouchListener(
+//        imageView_review_zoom.setOnTouchListener(
 //                new View.OnTouchListener() {
 //                    @Override
 //                    public boolean onTouch(View v, MotionEvent event) {
@@ -716,7 +720,7 @@ public class MyActivity extends Activity
 //                }
 //        );
 
-        findViewById(R.id.imageView_review).setOnTouchListener(new mTouchListener());
+        imageView_review.setOnTouchListener(new mTouchListener());
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1099,80 +1103,124 @@ public class MyActivity extends Activity
 
             //cursor.moveToFirst();// 把游标移动到首位，因为这里的Uri是包含ID的所以是唯一的不需要循环找指向第一个就是了
             String filePath = mCursor.getString(mCursor.getColumnIndex("_data"));// 获取图片路
-            String orientation = mCursor.getString(mCursor
-                    .getColumnIndex("orientation"));// 获取旋转的角度
+            String orientation = mCursor.getString(mCursor.getColumnIndex("orientation"));// 获取旋转的角度
             //mCursor.close();
+            photo_angle = 0;
+            if (orientation != null && !"".equals(orientation)) {
+                photo_angle = Integer.parseInt(orientation);
+            }
+
             if (filePath != null) {
-                //只解析为原图的inSampleSize分之一
-
-                float windowWidth = previewMaxX;
-                float windowHeight = previewMaxY;
-
                 BitmapFactory.Options opts = new BitmapFactory.Options();
-
                 //设置解析器不去真正的解析这个位图，而是解析这个图片的out输出信息(宽度，高度)，不会为图片的每个点申请内在空间
                 opts.inJustDecodeBounds = true;
                 //得到图片的宽高信息
                 BitmapFactory.decodeFile(filePath,opts);
-
-                int picWidth = opts.outWidth;
-                int picHeight = opts.outHeight;
-                if (orientation != null && !"".equals(orientation)) {
-                   if(Integer.parseInt(orientation) != 0){
-                       picWidth = opts.outHeight;
-                       picHeight = opts.outWidth;
-                   }
-                }
-
-                //得到缩放比例
-                float scaleX = picWidth/windowWidth;
-                float scaleY = picHeight/windowHeight;
-                //确定缩放比例
-                float inSampleSize = 1;
-                if(scaleX > scaleY){
-                    inSampleSize = scaleX;
-                }else{
-                    inSampleSize = scaleY;
-                }
-
-                //真正的解析这个图片
+                //真正的解析这个图片，只解析为原图的inSampleSize分之一
+                opts.inSampleSize = computeSampleSize(opts, -1, 1080*1440);
                 opts.inJustDecodeBounds = false;
-                opts.inSampleSize = Math.round(inSampleSize);
                 Bitmap bitmap = BitmapFactory.decodeFile(filePath, opts);//根据Path读取资源图片
-
-                Matrix matrix = new Matrix();
-                int angle = 0;
-                if (orientation != null && !"".equals(orientation)) {
-                    angle = Integer.parseInt(orientation);
-                }
-                if (angle != 0) {
-                    // 下面的方法主要作用是把图片转一个角度，也可以放大缩小等
-                    int width = bitmap.getWidth();
-                    int height = bitmap.getHeight();
-                    matrix.postRotate(angle); // 旋转angle度
-//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, m, true);// 从新生成图片
-                }
-
-//                Matrix matrix = new Matrix();
-                float scale;
-                float realInSampleSize = Math.round(inSampleSize);
-                if(windowWidth/(picWidth/inSampleSize) > windowHeight/(picHeight/inSampleSize)){
-                    scale = windowHeight/(picHeight/inSampleSize);
-                }else{
-                    scale = windowWidth/(picWidth/inSampleSize);
-                }
-                matrix.postScale(scale, scale,0,0);
-
-//                float dx = previewMaxX/2-bitmap.getWidth()*scale/2;
-//                float dy = previewMaxY/2-bitmap.getHeight()*scale/2;
-//                matrix.postTranslate(dx, dy);
-
-                imageView_review.setImageMatrix(matrix);
 
                 imageView_review.setImageBitmap(bitmap);
                 imageView_review_fake.setImageBitmap(bitmap);
 
+
+
+                Matrix matrix = new Matrix();
+
+                //获取imageView的大小
+                float windowWidth = previewMaxX;
+                float windowHeight = previewMaxY;
+
+                int picWidth = bitmap.getWidth();
+                int picHeight = bitmap.getHeight();
+                //解析的图片是没有旋转的，竖拍的照片须要将宽高反转
+                if (orientation != null && !"".equals(orientation)) {
+                   if(Integer.parseInt(orientation) != 0){
+                       picWidth = bitmap.getHeight();
+                       picHeight = bitmap.getWidth();
+                   }
+                }
+
+                //得到缩放比例
+                float scaleX = windowWidth/picWidth;
+                float scaleY = windowHeight/picHeight;
+                //确定缩放比例
+                float scale = 1;
+                if(scaleX < scaleY){
+                    scale = scaleX;
+                }else{
+                    scale = scaleY;
+                }
+                matrix.postScale(scale, scale,0,0);
+
+                // 把图片转一个角度,解决竖拍照片方向问题,同时使图片居中
+                float dx = 0;
+                float dy = 0;
+
+                if (photo_angle != 0) {
+                    matrix.postRotate(photo_angle); // 旋转angle度
+                    dx = windowWidth/2+picWidth*scale/2;
+                    dy = windowHeight/2-picHeight*scale/2;
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, m, true);// 从新生成图片
+                }else{
+                    dx = windowWidth/2-picWidth*scale/2;
+                    dy = windowHeight/2-picHeight*scale/2;
+                }
+                matrix.postTranslate(dx, dy);
+
+                imageView_review.setImageMatrix(matrix);
+                imageView_review_fake.setImageMatrix(matrix);
+
+
             }
+        }
+    }
+
+    //获取opts.inSampleSize
+    public static int computeSampleSize(BitmapFactory.Options options,
+                                        int minSideLength, int maxNumOfPixels) {
+
+        int initialSize = computeInitialSampleSize(options, minSideLength,
+                maxNumOfPixels);
+
+        int roundedSize;
+
+        if (initialSize <= 8) {
+            roundedSize = 1;
+            while (roundedSize < initialSize) {
+                roundedSize <<= 1;
+            }
+        } else {
+            roundedSize = (initialSize + 7) / 8 * 8;
+        }
+
+        return roundedSize;
+    }
+
+    private static int computeInitialSampleSize(BitmapFactory.Options options,
+                                                int minSideLength, int maxNumOfPixels) {
+
+        double w = options.outWidth;
+        double h = options.outHeight;
+
+        int lowerBound = (maxNumOfPixels == -1) ? 1 :
+                (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+        int upperBound = (minSideLength == -1) ? 128 :
+                (int) Math.min(Math.floor(w / minSideLength),
+                        Math.floor(h / minSideLength));
+
+        if (upperBound < lowerBound) {
+            // return the larger one when there is no overlapping zone.
+            return lowerBound;
+        }
+
+        if ((maxNumOfPixels == -1) && (minSideLength == -1)) {
+            return 1;
+        } else if (minSideLength == -1) {
+            return lowerBound;
+        } else {
+            return upperBound;
         }
     }
 
@@ -1260,12 +1308,17 @@ public class MyActivity extends Activity
         button_record.setRotation(r);
         button_close.setRotation(r);
 
-        imageView_review.setRotation(r);
-        imageView_review_fake.setRotation(r);
         button_previous.setRotation(r);
         button_delete.setRotation(r);
         button_next.setRotation(r);
         button_back.setRotation(r);
+
+        //这两个控件不旋转，里面的图片旋转
+        Matrix matrix = new Matrix();
+        matrix.postRotate(r);
+        imageView_review.setImageMatrix(matrix);
+        imageView_review_fake.setImageMatrix(matrix);
+
     }
 
     private void setVisible(int r) {
@@ -1639,6 +1692,7 @@ public class MyActivity extends Activity
                     mode = MODE_DRAG;
                     // 记录ImageView当前的移动位置
                     currentMatrix.set(imageView_review.getImageMatrix());
+                    matrix.set(currentMatrix);
                     startPoint.set(event.getX(), event.getY());
                     break;
                 // 手指在屏幕上移动，改事件会被不断触发

@@ -2,22 +2,22 @@
 <pre-dex-items>
 
     <item
-        dex="D:\GitHub\CameraD90\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-a8f51f87e0a2c5466a7b40815a240aacfdb9150b.jar"
-        jar="D:\GitHub\CameraD90\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        dex="E:\GitHub\CameraD90\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-eeb509dd2b70c7cbb582ec7bbb12c1652fd44758.jar"
+        jar="C:\Program Files\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
     <item
-        dex="D:\GitHub\CameraD90\app\build\intermediates\pre-dexed\debug\classes-0e062f17d0eb27e16adda673e1fa1661d0d49938.jar"
-        jar="D:\GitHub\CameraD90\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        dex="E:\GitHub\CameraD90\app\build\intermediates\pre-dexed\debug\classes-4460167a4445d016e23641f4bb9891ea0d933b7a.jar"
+        jar="E:\GitHub\CameraD90\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
     <item
-        dex="D:\GitHub\CameraD90\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-0512a16fd6464c4603b64aa776f5e95358c257af.jar"
-        jar="C:\Users\Administrator\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        dex="E:\GitHub\CameraD90\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-1634f90adba4d12824b4db4c4e00b7d2f271d222.jar"
+        jar="E:\GitHub\CameraD90\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
 
 </pre-dex-items>

@@ -17,7 +17,7 @@
     <shared>
       <config>
         <devices>
-          <device id="Hardware Buttons 1080p" />
+          <device id="Nexus 5 Hardware Buttons" />
           <device id="Nexus 4" />
           <device id="Nexus 5" />
           <device id="Nexus One" />
@@ -62,18 +62,87 @@
     <favorites_list name="CameraD90" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.46363637">
+    <splitter split-orientation="horizontal" split-proportion="0.3673594">
       <split-first>
         <leaf>
           <file leaf-file-name="MyActivity.java" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="2.5077605" vertical-offset="46779" max-vertical-offset="48870">
-                  <caret line="1679" column="21" selection-start-line="1679" selection-start-column="21" selection-end-line="1679" selection-end-column="21" />
+                <state vertical-scroll-proportion="0.358396" vertical-offset="16274" max-vertical-offset="19600">
+                  <caret line="1319" column="53" selection-start-line="1319" selection-start-column="53" selection-end-line="1319" selection-end-column="53" />
                   <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#52853#52866#0" expanded="true" />
-                    <element signature="e#53337#53350#0" expanded="true" />
+                    <element signature="docComment;field#mNavigationDrawerFragment#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#hideSystemUI#0;class#MyActivity#0" expanded="false" />
+                    <element signature="e#5692#5718#0" expanded="false" />
+                    <element signature="method#showSystemUI#0;class#MyActivity#0" expanded="false" />
+                    <element signature="class#10485:11031" expanded="false" />
+                    <element signature="method#onDrawerSlide#0;class#10485:11031" expanded="false" />
+                    <element signature="method#onDrawerOpened#0;class#10485:11031" expanded="false" />
+                    <element signature="method#onDrawerStateChanged#0;class#10485:11031" expanded="false" />
+                    <element signature="e#11909#11927#0" expanded="false" />
+                    <element signature="e#15418#15498#0" expanded="false" />
+                    <element signature="e#21588#21651#0" expanded="false" />
+                    <element signature="e#26433#26510#0" expanded="false" />
+                    <element signature="method#onNavigationDrawerItemSelected#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#resumeCamera#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#onPause#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#releaseMediaRecorder#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#releaseCamera#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#setDefaultCamera#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#getCameraInstance#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                    <element signature="class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#CameraPreview#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                    <element signature="e#37437#37500#0" expanded="false" />
+                    <element signature="method#surfaceCreated#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#surfaceDestroyed#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#surfaceChanged#0;class#CameraPreview#0;class#MyActivity#0" expanded="false" />
+                    <element signature="e#38489#38575#0" expanded="false" />
+                    <element signature="e#39715#39759#0" expanded="false" />
+                    <element signature="e#43110#43151#0" expanded="false" />
+                    <element signature="e#45078#45126#0" expanded="false" />
+                    <element signature="method#computeSampleSize#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#computeInitialSampleSize#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#getOutputMediaFile#0;class#MyActivity#0" expanded="false" />
+                    <element signature="e#50600#50658#0" expanded="false" />
+                    <element signature="e#50885#50956#0" expanded="false" />
+                    <element signature="method#onAccuracyChanged#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#onSensorChanged#0;class#MyActivity#0" expanded="false" />
+                    <element signature="e#52114#52157#0" expanded="false" />
+                    <element signature="method#setFocusArea#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#setMeteringArea#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#calculateTapArea#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#touch2camera#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#camera2touch#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#clamp#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#drawArea#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#drawArea1#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#drawArea2#0;class#MyActivity#0" expanded="false" />
+                    <element signature="class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#onSingleTapUp#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#onFling#0;class#MyGestureListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#onKeyDown#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#onKeyUp#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#takePhoto#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#prepareVideoRecorder#0;class#MyActivity#0" expanded="false" />
+                    <element signature="e#63927#63933#0" expanded="false" />
+                    <element signature="e#64567#64633#0" expanded="false" />
+                    <element signature="e#65067#65075#0" expanded="false" />
+                    <element signature="docComment;field#mode#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;field#MODE_DRAG#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;field#MODE_ZOOM#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;field#startPoint#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;field#matrix#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;field#currentMatrix#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;field#startDis#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;field#midPoint#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;method#distance#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#distance#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="docComment;method#mid#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
+                    <element signature="method#mid#0;class#mTouchListener#0;class#MyActivity#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -85,21 +154,8 @@
                 <state />
               </provider>
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-4.83871" vertical-offset="6450" max-vertical-offset="8160">
-                  <caret line="220" column="42" selection-start-line="220" selection-start-column="42" selection-end-line="220" selection-end-column="42" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="review_fake.xml" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/review_fake.xml">
-              <provider editor-type-id="android-designer">
-                <state />
-              </provider>
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="12.580646" vertical-offset="810" max-vertical-offset="1500">
-                  <caret line="14" column="36" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="36" />
+                <state vertical-scroll-proportion="-4.491228" vertical-offset="4264" max-vertical-offset="5440">
+                  <caret line="226" column="50" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="50" />
                   <folding />
                 </state>
               </provider>
@@ -112,14 +168,9 @@
           <file leaf-file-name="MyActivity.java" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.76811594" vertical-offset="30229" max-vertical-offset="46920">
-                  <caret line="1163" column="0" selection-start-line="1163" selection-start-column="0" selection-end-line="1163" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#32673#32859#0" expanded="true" />
-                    <element signature="e#32840#32841#0" expanded="true" />
-                    <element signature="e#32928#33113#0" expanded="true" />
-                    <element signature="e#33094#33095#0" expanded="true" />
-                  </folding>
+                <state vertical-scroll-proportion="1.2681705" vertical-offset="19388" max-vertical-offset="32160">
+                  <caret line="1173" column="0" selection-start-line="1173" selection-start-column="0" selection-end-line="1173" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -552,7 +603,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4228686771479" />
+        <entry key="$PROJECT_DIR$" value="4230976045108" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -833,10 +884,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1050" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1696" />
+    <option name="height" value="1026" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -905,6 +956,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1113,7 +1165,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -1136,6 +1187,7 @@
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="461" />
     <property name="LayoutCode.rearrangeEntriesXML" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="275" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="AVD_for_Xperia_Z2_by_Sony" />
   </component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
@@ -1347,7 +1399,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
@@ -1360,17 +1412,17 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16149732" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32534248" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16136919" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32451093" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32534248" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32451093" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.113903746" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15281174" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13691932" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39726028" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39700806" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1392,19 +1444,19 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13691932" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3981588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39700806" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16149732" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32534248" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16136919" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32451093" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32534248" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32451093" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.113903746" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15281174" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1428,7 +1480,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="58" />
+      <option name="time" value="68" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -1436,12 +1488,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="21354" max-vertical-offset="49980">
           <caret line="718" column="48" selection-start-line="718" selection-start-column="48" selection-end-line="718" selection-end-column="48" />
-          <folding>
-            <element signature="e#32673#32859#0" expanded="true" />
-            <element signature="e#32840#32841#0" expanded="true" />
-            <element signature="e#32928#33113#0" expanded="true" />
-            <element signature="e#33094#33095#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1585,14 +1632,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_navigation_drawer.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45627376" vertical-offset="0" max-vertical-offset="526">
           <caret line="8" column="48" selection-start-line="0" selection-start-column="3" selection-end-line="8" selection-end-column="48" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_launcher.png">
@@ -1716,13 +1763,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-20/android.jar!/android/view/View.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1599" max-vertical-offset="24160">
-          <caret line="95" column="58" selection-start-line="95" selection-start-column="43" selection-end-line="95" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6989247" vertical-offset="450" max-vertical-offset="1170">
@@ -1778,42 +1818,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="3.2345972" vertical-offset="0" max-vertical-offset="8130">
           <caret line="112" column="69" selection-start-line="112" selection-start-column="69" selection-end-line="112" selection-end-column="69" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/review_fake.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1000">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-20/android.jar!/android/view/View.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="12.580646" vertical-offset="810" max-vertical-offset="1500">
-          <caret line="14" column="36" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.33195022" vertical-offset="10260" max-vertical-offset="24160">
+          <caret line="522" column="19" selection-start-line="522" selection-start-column="19" selection-end-line="522" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_my.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.83871" vertical-offset="6450" max-vertical-offset="8160">
-          <caret line="220" column="42" selection-start-line="220" selection-start-column="42" selection-end-line="220" selection-end-column="42" />
+        <state vertical-scroll-proportion="-4.491228" vertical-offset="4264" max-vertical-offset="5440">
+          <caret line="226" column="50" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="50" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/zgz/camerad90/MyActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.76811594" vertical-offset="30229" max-vertical-offset="46920">
-          <caret line="1163" column="0" selection-start-line="1163" selection-start-column="0" selection-end-line="1163" selection-end-column="0" />
-          <folding>
-            <element signature="e#32673#32859#0" expanded="true" />
-            <element signature="e#32840#32841#0" expanded="true" />
-            <element signature="e#32928#33113#0" expanded="true" />
-            <element signature="e#33094#33095#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="1.2681705" vertical-offset="19388" max-vertical-offset="32160">
+          <caret line="1173" column="0" selection-start-line="1173" selection-start-column="0" selection-end-line="1173" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
