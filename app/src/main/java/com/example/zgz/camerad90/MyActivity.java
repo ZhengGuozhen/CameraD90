@@ -21,6 +21,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -31,6 +32,7 @@ import android.media.ExifInterface;
 import android.media.Image;
 import android.media.MediaRecorder;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -108,7 +110,6 @@ public class MyActivity extends Activity
     private Sensor mSensor;
     private int photoDegree = 90;//0表示横屏，90表示竖屏
     private int oldPhotoDegree = 90;//0表示横屏，90表示竖屏
-    private GestureDetectorCompat mDetector;
     private ImageView ivFocus;
     private ImageView ivMetering;
     private Button button_capture;
@@ -139,21 +140,6 @@ public class MyActivity extends Activity
     private RelativeLayout layout_buttons;
     private RelativeLayout layout_draw;
 
-    private PointF tapPoint = new PointF();//用于ivFocus的onSingleTapUp
-
-    //以下变量用于ivFocus.setOnTouchListener
-    private static final int NONE = 0;
-    private static final int MOVE = 1;
-    private static final int ZOOM = 2;
-    private int mode = NONE;
-    private PointF start = new PointF();
-    private PointF mid = new PointF();
-    private float oldDistance;
-    private int startZoom;
-
-    //以下变量用于imageView_review.setOnTouchListener
-    private PointF start1 = new PointF();
-
     private int captureMode = 0;
     private boolean focusing = false;
     private boolean saving = false;
@@ -163,7 +149,7 @@ public class MyActivity extends Activity
 
     private View mDecorView;
 
-    private int cursorPosition;
+    private int cursorPosition;//标识当前显示图片的索引
 
     // This snippet hides the system bars.
     private void hideSystemUI() {
@@ -207,7 +193,6 @@ public class MyActivity extends Activity
 
         mSharedPreferences= PreferenceManager.getDefaultSharedPreferences(this) ;
 
-        mDetector = new GestureDetectorCompat(this, new MyGestureListener());
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
 
@@ -335,102 +320,7 @@ public class MyActivity extends Activity
     }
 
     private void setUI(){
-        ivFocus.setOnTouchListener(
-                new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        mDetector.onTouchEvent(event);
-
-                        Camera.Parameters parameters = mCamera.getParameters();
-
-                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                            case MotionEvent.ACTION_DOWN:
-                                start.set(event.getX(), event.getY());
-                                startZoom = parameters.getZoom();
-                                break;
-                            case MotionEvent.ACTION_MOVE:
-                                float deltaX = event.getX() - start.x;
-                                float deltaY = event.getY() - start.y;
-                                float deltaZoom = (deltaX - deltaY) / 30f;
-                                int zoom = startZoom + (int) deltaZoom;
-                                //当zoom与当前值不同时才会设定
-                                if (zoom != parameters.getZoom()) {
-                                    //在zoom=16这个位置卡一下
-                                    if (startZoom < 16 && zoom > 16) zoom = 16;
-
-                                    if (zoom >= parameters.getMaxZoom())
-                                        zoom = parameters.getMaxZoom();
-                                    else if (zoom <= 0)
-                                        zoom = 0;
-
-                                    parameters.setZoom(zoom);
-                                    mCamera.setParameters(parameters);
-                                    button_zoom.setText(zoom + "");
-                                    button_zoom.setVisibility(View.VISIBLE);
-                                    mode = MOVE;
-                                }
-                            case MotionEvent.ACTION_UP:
-                                if (mode == MOVE) {
-                                    AlphaAnimation aa = new AlphaAnimation(1.0f, 0.0f);//创建一个AlphaAnimation 对象，渐变从1->0
-                                    aa.setDuration(1500);//设置持续时间
-                                    aa.setFillAfter(true);//设置这个View最后的状态，由于是从1->0,所以最后的是消失状态（最后是看不到见这个View的）
-                                    button_zoom.startAnimation(aa);
-
-                                    mode = NONE;
-                                }
-                                break;
-                        }
-
-//                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-//                            case MotionEvent.ACTION_DOWN:
-//                                start.set(event.getX(), event.getY());
-//                                mode = MOVE;
-//                                break;
-//                            case MotionEvent.ACTION_UP:
-//                            case MotionEvent.ACTION_POINTER_UP:
-//                                mode = NONE;
-//                                break;
-//                            case MotionEvent.ACTION_POINTER_DOWN:
-//                                oldDistance = (float) Math.sqrt((event.getX(0) - event.getX(1)) * (event.getX(0) - event.getX(1)) + (event.getY(0) - event.getY(1)) * (event.getY(0) - event.getY(1)));
-//                                if (oldDistance > 10f) {
-//                                    mid.set((event.getX(0)+event.getX(1))/2, (event.getY(0)+event.getY(1))/2);
-//                                    mode = ZOOM;
-//                                }
-//                            case MotionEvent.ACTION_MOVE:
-//                                if (mode == MOVE) {
-//                                    float deltaX=0;
-//                                    float deltaY=0;
-//                                    if(event.getHistorySize()>0){
-//                                        deltaX=event.getX()-event.getHistoricalX(0);
-//                                        deltaY=event.getY()-event.getHistoricalY(0);
-//                                    }
-//                                    Camera.Parameters parameters = mCamera.getParameters();
-//                                    float mx=parameters.getMeteringAreas().get(0).rect.centerX();
-//                                    float my=parameters.getMeteringAreas().get(0).rect.centerY();
-//                                    float[] ff = camera2touch(mx, my, previewMaxX, previewMaxY);
-//                                    setMeteringArea(clamp(ff[0]+deltaX,0,previewMaxX),clamp(ff[1]+deltaY,0,previewMaxY), meteringSize);
-//                                    drawArea(ivMetering, parameters.getMeteringAreas().get(0).rect, Color.BLUE);
-//                                } else if (mode == ZOOM) {
-//                                    float newDistance;
-//                                    newDistance = (float) Math.sqrt((event.getX(0) - event.getX(1)) * (event.getX(0) - event.getX(1)) + (event.getY(0) - event.getY(1)) * (event.getY(0) - event.getY(1)));
-//                                    if (newDistance > 10f) {
-//                                        meteringSize+=2*(newDistance-oldDistance);
-//                                        if(meteringSize<=300){ meteringSize=300; }
-//                                        Camera.Parameters parameters = mCamera.getParameters();
-//                                        float mx=parameters.getMeteringAreas().get(0).rect.centerX();
-//                                        float my=parameters.getMeteringAreas().get(0).rect.centerY();
-//                                        float[] ff = camera2touch(mx, my, previewMaxX, previewMaxY);
-//                                        setMeteringArea(ff[0],ff[1], meteringSize);
-//                                        drawArea(ivMetering, parameters.getMeteringAreas().get(0).rect, Color.BLUE);
-//                                        oldDistance = newDistance;
-//                                    }
-//                                }
-//                                break;
-//                        }
-                        return true;//这里一定要return true，否则mDetector.onTouchEvent(event)不会执行
-                    }
-                }
-        );
+        ivFocus.setOnTouchListener(new mTouchListener1());
 
         button_record.setOnClickListener(
                 new View.OnClickListener() {
@@ -460,6 +350,7 @@ public class MyActivity extends Activity
                             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
                             layoutParams.width = (int) previewMaxX;
                             layoutParams.height = (int) previewMaxY;
+                            layoutParams.topMargin=174;//58dp
                             layout_draw.setLayoutParams(layoutParams);
 
                         } else {
@@ -471,11 +362,11 @@ public class MyActivity extends Activity
                             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
                             layoutParams.width = (int) previewMaxX;
                             layoutParams.height = (int) previewMaxY;
+                            layoutParams.topMargin=0;
                             layout_draw.setLayoutParams(layoutParams);
 
                             focusing = true;
                             saving = true;
-
 
                             //prepareVideoRecorder之前必须releaseCamera
                             releaseCamera();
@@ -569,6 +460,8 @@ public class MyActivity extends Activity
                                     parameters.setAutoExposureLock(false);
                                     mCamera.setParameters(parameters);
                                     button_lock.setVisibility(View.INVISIBLE);
+
+                                    drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.CYAN);
 
                                     layout_buttons.setVisibility(View.VISIBLE);//取消拍照后显示其他按钮
                                 }
@@ -1149,9 +1042,13 @@ public class MyActivity extends Activity
                     matrix = imageCenter(previewMaxX, previewMaxY,
                             photo_width, photo_height, 0);
                 }else if(photoDegree == 0){
-                    //横屏
+                    //左横屏
                     matrix = imageCenter(previewMaxY, previewMaxX,
                             photo_width, photo_height, 1);
+                }else if(photoDegree == 180){
+                    //右横屏
+                    matrix = imageCenter(previewMaxY, previewMaxX,
+                            photo_width, photo_height, 2);
                 }
 
                 imageView_review.setImageMatrix(matrix);
@@ -1166,7 +1063,7 @@ public class MyActivity extends Activity
         Matrix matrix = new Matrix();
 
         //解析的图片是没有旋转的，竖拍的照片须要将宽高反转
-        if (photo_angle!=0) {
+        if (photo_angle == 90) {
             int temp = picWidth;
             picWidth = picHeight;
             picHeight = temp;
@@ -1190,28 +1087,52 @@ public class MyActivity extends Activity
 
         if(mode==0){
             //竖屏情况
-            if (photo_angle != 0) {
+            if(photo_angle == 90) {
                 matrix.postRotate(90); // 旋转angle度
                 dx = windowWidth/2+picWidth*scale/2;
                 dy = windowHeight/2-picHeight*scale/2;
-            }else{
+            }else if(photo_angle == 0){
                 dx = windowWidth/2-picWidth*scale/2;
                 dy = windowHeight/2-picHeight*scale/2;
+            }else if(photo_angle == 180){
+                matrix.postRotate(180);
+                dx = windowWidth/2+picWidth*scale/2;
+                dy = windowHeight/2+picHeight*scale/2;
             }
             matrix.postTranslate(dx, dy);
         }else if(mode==1){
-            //横屏情况
-            if (photo_angle != 0) {
+            //左横屏情况
+            if(photo_angle == 90) {
                 matrix.postRotate(180);
                 dx = windowHeight/2+picHeight*scale/2;
                 dy = windowWidth/2+picWidth*scale/2;
-            }else{
+            }else if(photo_angle == 0){
+                matrix.postRotate(90);
+                dx = windowHeight/2+picHeight*scale/2;
+                dy = windowWidth/2-picWidth*scale/2;
+            }else if(photo_angle == 180){
+                matrix.postRotate(-90);
+                dx = windowHeight/2-picHeight*scale/2;
+                dy = windowWidth/2+picWidth*scale/2;
+            }
+            matrix.postTranslate(dx, dy);
+        }else if(mode==2){
+            //右横屏情况
+            if(photo_angle == 90) {
+                dx = windowHeight/2-picHeight*scale/2;
+                dy = windowWidth/2-picWidth*scale/2;
+            }else if(photo_angle == 0){
+                matrix.postRotate(-90);
+                dx = windowHeight/2-picHeight*scale/2;
+                dy = windowWidth/2+picWidth*scale/2;
+            }else if(photo_angle == 180){
                 matrix.postRotate(90);
                 dx = windowHeight/2+picHeight*scale/2;
                 dy = windowWidth/2-picWidth*scale/2;
             }
             matrix.postTranslate(dx, dy);
         }
+
         return matrix;
     }
 
@@ -1311,10 +1232,12 @@ public class MyActivity extends Activity
         float y = event.values[1];
         float z = event.values[2];
         // Do something with this sensor value.
-        if (y >= x) {
+        if (y >= x && y>=-x) {
             photoDegree = 90;//竖屏
-        } else {
-            photoDegree = 0;//横屏
+        } else if(y<=x && y>=-x){
+            photoDegree = 0;//左横屏
+        }else if(y>=x && y<=-x){
+            photoDegree = 180;//右横屏
         }
 
         //横竖屏发生变化时才改变控件方向
@@ -1323,6 +1246,9 @@ public class MyActivity extends Activity
                 setRotation(0);
             } else if (photoDegree == 0) {
                 setRotation(90);
+            }
+            else if (photoDegree == 180) {
+                setRotation(-90);
             }
         }
 
@@ -1357,10 +1283,12 @@ public class MyActivity extends Activity
             matrix = imageCenter(previewMaxY,previewMaxX,photo_width, photo_height, 1);
         }else if(r==0){
             matrix = imageCenter(previewMaxX,previewMaxY,photo_width, photo_height, 0);
+        }else if(r==-90){
+            matrix = imageCenter(previewMaxY,previewMaxX,photo_width, photo_height, 2);
         }
+
         imageView_review.setImageMatrix(matrix);
         imageView_review_fake.setImageMatrix(matrix);
-
     }
 
     private void setVisible(int r) {
@@ -1377,7 +1305,6 @@ public class MyActivity extends Activity
         button_focusMode.setVisibility(r);
 
     }
-
 
     //触摸对焦相关函数
     public void setFocusArea(float x, float y, float areaSize) {
@@ -1488,44 +1415,6 @@ public class MyActivity extends Activity
         imageView.setImageBitmap(bitmap);
     }
 
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onDown(MotionEvent event) {
-            return true;
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent event) {
-            if (focusing) {
-                Toast.makeText(getApplicationContext(), "Focusing",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                focusing = true;
-
-                float x = event.getX();
-                float y = event.getY();
-                //Toast.makeText(getApplicationContext(), "tap", Toast.LENGTH_SHORT).show();
-                tapPoint.x = x;
-                tapPoint.y = y;
-
-                setFocusArea(x, y, focusSize);
-                //setMeteringArea(x, y, meteringSize);
-                Camera.Parameters parameters = mCamera.getParameters();
-                drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.CYAN);
-                //drawArea(ivMetering, parameters.getMeteringAreas().get(0).rect, Color.BLUE);
-
-                captureMode = 0;
-                mCamera.autoFocus(myAutoFocusCallback);
-            }
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
-            return true;
-        }
-    }
-
     private boolean focusKey = false;//每个按键按下后只检测一次
     private boolean cameraKey = false;
     private boolean justFocus = true;//标识只按了对焦键，没有按拍照键的情况
@@ -1600,19 +1489,25 @@ public class MyActivity extends Activity
                 mCamera.setParameters(parameters);
                 button_lock.setVisibility(View.INVISIBLE);
 
+                drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.CYAN);
+
                 layout_buttons.setVisibility(View.VISIBLE);
             }
-
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_CAMERA) {
             cameraKey = false;
-
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
             onBackPressed();
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        return;
     }
 
     private void takePhoto() {
@@ -1797,5 +1692,149 @@ public class MyActivity extends Activity
 
     }
 
+    private final class mTouchListener1 implements View.OnTouchListener {
+        private static final int NONE = 0;
+        private static final int MOVE = 1;
+        private static final int ZOOM = 2;
+        private int mode = NONE;
+        private PointF start = new PointF();
+        private PointF mid = new PointF();
+        private float oldDistance;
+        private int startZoom;
+
+        private GestureDetectorCompat mDetector = new GestureDetectorCompat(
+                getApplicationContext(), new MyGestureListener());
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            mDetector.onTouchEvent(event);
+
+            Camera.Parameters parameters = mCamera.getParameters();
+
+            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                case MotionEvent.ACTION_DOWN:
+                    start.set(event.getX(), event.getY());
+                    startZoom = parameters.getZoom();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float deltaX = event.getX() - start.x;
+                    float deltaY = event.getY() - start.y;
+                    float deltaZoom = (deltaX - deltaY) / 30f;
+                    int zoom = startZoom + (int) deltaZoom;
+                    //当zoom与当前值不同时才会设定
+                    if (zoom != parameters.getZoom()) {
+                        //在zoom=16这个位置卡一下
+                        if (startZoom < 16 && zoom > 16) zoom = 16;
+
+                        if (zoom >= parameters.getMaxZoom())
+                            zoom = parameters.getMaxZoom();
+                        else if (zoom <= 0)
+                            zoom = 0;
+
+                        parameters.setZoom(zoom);
+                        mCamera.setParameters(parameters);
+                        button_zoom.setText(zoom + "");
+                        button_zoom.setVisibility(View.VISIBLE);
+                        mode = MOVE;
+                    }
+                case MotionEvent.ACTION_UP:
+                    if (mode == MOVE) {
+                        AlphaAnimation aa = new AlphaAnimation(1.0f, 0.0f);//创建一个AlphaAnimation 对象，渐变从1->0
+                        aa.setDuration(1500);//设置持续时间
+                        aa.setFillAfter(true);//设置这个View最后的状态，由于是从1->0,所以最后的是消失状态（最后是看不到见这个View的）
+                        button_zoom.startAnimation(aa);
+
+                        mode = NONE;
+                    }
+                    break;
+            }
+
+            //原来的OnTouchListener，实现了拖动改变测光位置，缩放改变测光区域大小
+//            switch (event.getAction() & MotionEvent.ACTION_MASK) {
+//                case MotionEvent.ACTION_DOWN:
+//                    start.set(event.getX(), event.getY());
+//                    mode = MOVE;
+//                    break;
+//                case MotionEvent.ACTION_UP:
+//                case MotionEvent.ACTION_POINTER_UP:
+//                    mode = NONE;
+//                    break;
+//                case MotionEvent.ACTION_POINTER_DOWN:
+//                    oldDistance = (float) Math.sqrt((event.getX(0) - event.getX(1)) * (event.getX(0) - event.getX(1)) + (event.getY(0) - event.getY(1)) * (event.getY(0) - event.getY(1)));
+//                    if (oldDistance > 10f) {
+//                        mid.set((event.getX(0)+event.getX(1))/2, (event.getY(0)+event.getY(1))/2);
+//                        mode = ZOOM;
+//                    }
+//                case MotionEvent.ACTION_MOVE:
+//                    if (mode == MOVE) {
+//                        float deltaX=0;
+//                        float deltaY=0;
+//                        if(event.getHistorySize()>0){
+//                            deltaX=event.getX()-event.getHistoricalX(0);
+//                            deltaY=event.getY()-event.getHistoricalY(0);
+//                        }
+//                        Camera.Parameters parameters = mCamera.getParameters();
+//                        float mx=parameters.getMeteringAreas().get(0).rect.centerX();
+//                        float my=parameters.getMeteringAreas().get(0).rect.centerY();
+//                        float[] ff = camera2touch(mx, my, previewMaxX, previewMaxY);
+//                        setMeteringArea(clamp(ff[0]+deltaX,0,previewMaxX),clamp(ff[1]+deltaY,0,previewMaxY), meteringSize);
+//                        drawArea(ivMetering, parameters.getMeteringAreas().get(0).rect, Color.BLUE);
+//                    } else if (mode == ZOOM) {
+//                        float newDistance;
+//                        newDistance = (float) Math.sqrt((event.getX(0) - event.getX(1)) * (event.getX(0) - event.getX(1)) + (event.getY(0) - event.getY(1)) * (event.getY(0) - event.getY(1)));
+//                        if (newDistance > 10f) {
+//                            meteringSize+=2*(newDistance-oldDistance);
+//                            if(meteringSize<=300){ meteringSize=300; }
+//                            Camera.Parameters parameters = mCamera.getParameters();
+//                            float mx=parameters.getMeteringAreas().get(0).rect.centerX();
+//                            float my=parameters.getMeteringAreas().get(0).rect.centerY();
+//                            float[] ff = camera2touch(mx, my, previewMaxX, previewMaxY);
+//                            setMeteringArea(ff[0],ff[1], meteringSize);
+//                            drawArea(ivMetering, parameters.getMeteringAreas().get(0).rect, Color.BLUE);
+//                            oldDistance = newDistance;
+//                        }
+//                    }
+//                    break;
+//            }
+
+            return true;//这里一定要return true，否则mDetector.onTouchEvent(event)不会执行
+        }
+    }
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent event) {
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent event) {
+            if (focusing) {
+                Toast.makeText(getApplicationContext(), "Focusing",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                focusing = true;
+
+                float x = event.getX();
+                float y = event.getY();
+                //Toast.makeText(getApplicationContext(), "tap", Toast.LENGTH_SHORT).show();
+
+                setFocusArea(x, y, focusSize);
+                //setMeteringArea(x, y, meteringSize);
+                Camera.Parameters parameters = mCamera.getParameters();
+                drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.CYAN);
+                //drawArea(ivMetering, parameters.getMeteringAreas().get(0).rect, Color.BLUE);
+
+                captureMode = 0;
+                mCamera.autoFocus(myAutoFocusCallback);
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+            return true;
+        }
+    }
 
 }

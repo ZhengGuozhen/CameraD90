@@ -217,6 +217,7 @@
         <ImageView
             android:layout_width="360dp"
             android:layout_height="480dp"
+            android:layout_alignParentTop="true"
             android:id="@+id/imageView_review"
             android:src="@drawable/ic_launcher"
             android:scaleType="matrix"
@@ -264,4 +265,4 @@
 
     </RelativeLayout>
 
-<!-- From: file:/D:/GitHub/CameraD90/app/src/main/res/layout/activity_my.xml -->
+<!-- From: file:/E:/GitHub/CameraD90/app/src/main/res/layout/activity_my.xml -->
