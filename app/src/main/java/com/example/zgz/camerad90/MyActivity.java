@@ -341,6 +341,9 @@ public class MyActivity extends Activity
                             params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
                             mCamera.setParameters(params);
 
+                            setDefaultCamera();
+                            setDefaultUI();
+
                             focusing = false;
                             saving = false;
 
@@ -690,14 +693,11 @@ public class MyActivity extends Activity
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         resumeCamera();
+
         setDefaultCamera();
 
-        //resume后相机初始化了，ui没有，需要想ui恢复到与camera对应值
-        Camera.Parameters params = mCamera.getParameters();
-        button_ec.setText(params.getExposureCompensation()+"");
-        button_flash.setText(params.getFlashMode());
-        button_zoom.setText(params.getZoom()+"");
-        button_focusMode.setText(params.getFocusMode());
+        setDefaultUI();
+
         setImage(0);
     }
 
@@ -763,6 +763,15 @@ public class MyActivity extends Activity
         mCamera.setParameters(params);
         setFocusArea(previewMaxX / 2, previewMaxY / 2, focusSize);
 
+    }
+
+    private void setDefaultUI(){
+        //resume后相机初始化了，ui没有，需要想ui恢复到与camera对应值
+        Camera.Parameters params = mCamera.getParameters();
+        button_ec.setText(params.getExposureCompensation()+"");
+        button_flash.setText(params.getFlashMode());
+        button_zoom.setText(params.getZoom()+"");
+        button_focusMode.setText(params.getFocusMode());
     }
 
     /**

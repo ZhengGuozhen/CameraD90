@@ -3,43 +3,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="48dp"
+    android:paddingBottom="0dp"
     android:background="@android:color/black">
 
 
     <ImageView
+        android:id="@+id/imageView_review_fake"
         android:layout_width="360dp"
         android:layout_height="480dp"
+        android:layout_alignParentTop="true"
         android:src="@drawable/ic_launcher"
-        android:id="@+id/imageView_review_fake"
-        android:scaleType="matrix" />
+        android:scaleType="matrix"
+        android:background="@android:color/white" />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:layout_weight="1"
-            android:layout_width="50dp"
-            android:layout_height="64dp"
-            android:text="&lt;"
-            android:textSize="50sp" />
-        <Button
-            android:layout_weight="1"
-            android:layout_width="50dp"
-            android:layout_height="64dp"
-            android:text="&gt;"
-            android:textSize="50sp" />
-        <Button
-            android:layout_weight="1"
-            android:layout_width="50dp"
-            android:layout_height="64dp"
-            android:text="X"
-            android:textSize="50sp" />
-
-        </LinearLayout>
-
+        android:layout_height="160dp"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
