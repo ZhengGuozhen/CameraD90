@@ -212,7 +212,7 @@
         android:paddingBottom="8dp"
         android:background="@android:color/black"
         android:id="@+id/layout_review"
-        android:visibility="invisible">
+        android:visibility="invisible" >
 
         <ImageView
             android:layout_width="360dp"
@@ -276,6 +276,48 @@
                 android:id="@+id/button_finish" />
 
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_delete"
+            android:background="#88000000"
+            android:visibility="invisible"
+            android:clickable="true">
+
+            <RelativeLayout
+                android:layout_width="220dp"
+                android:layout_height="120dp"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                android:id="@+id/layout_delete_dialog"
+                android:background="#FF45c1ff"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm Delete ?"
+                    android:textSize="24sp" />
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="YES"
+                    android:textSize="24sp"
+                    android:id="@+id/button_delete_confirm" />
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="NO"
+                    android:textSize="24sp"
+                    android:id="@+id/button_delete_cancel" />
+
+                </RelativeLayout>
+            </RelativeLayout>
 
     </RelativeLayout>
 

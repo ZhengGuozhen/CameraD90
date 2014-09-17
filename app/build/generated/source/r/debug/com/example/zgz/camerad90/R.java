@@ -34,12 +34,14 @@ public final class R {
         public static final int over_button=0x7f020005;
     }
     public static final class id {
-        public static final int action_example=0x7f0a001e;
-        public static final int action_settings=0x7f0a001d;
+        public static final int action_example=0x7f0a0022;
+        public static final int action_settings=0x7f0a0021;
         public static final int button_back=0x7f0a0019;
         public static final int button_capture=0x7f0a000a;
         public static final int button_close=0x7f0a0012;
         public static final int button_delete=0x7f0a001a;
+        public static final int button_delete_cancel=0x7f0a001f;
+        public static final int button_delete_confirm=0x7f0a001e;
         public static final int button_ec=0x7f0a0007;
         public static final int button_ecAdd=0x7f0a0008;
         public static final int button_ecReduce=0x7f0a0009;
@@ -57,11 +59,13 @@ public final class R {
         public static final int container=0x7f0a0001;
         public static final int drawer_layout=0x7f0a0000;
         public static final int imageView_review=0x7f0a0015;
-        public static final int imageView_review_fake=0x7f0a001c;
+        public static final int imageView_review_fake=0x7f0a0020;
         public static final int imageView_review_zoom=0x7f0a0016;
         public static final int ivFocus=0x7f0a0005;
         public static final int ivMetering=0x7f0a0004;
         public static final int layout_buttons=0x7f0a0006;
+        public static final int layout_delete=0x7f0a001c;
+        public static final int layout_delete_dialog=0x7f0a001d;
         public static final int layout_draw=0x7f0a0002;
         public static final int layout_review=0x7f0a0014;
         public static final int navigation_drawer=0x7f0a0013;

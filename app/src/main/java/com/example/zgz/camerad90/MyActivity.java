@@ -66,6 +66,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,7 +94,7 @@ public class MyActivity extends Activity
     public static final int IN_SAMPLE_SIZE = 5;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
-    private float focusSize = 300;
+    private float focusSize = 200;
     private float meteringSize = 500;
     private float previewMaxX = 1080;
     private float previewMaxY = 1440;
@@ -125,6 +126,7 @@ public class MyActivity extends Activity
     private Button button_focusMode;
     private Button button_close;
 
+    //review相关的变量
     private RelativeLayout layout_review;
     private ImageView imageView_review;
     private ImageView imageView_review_zoom;
@@ -133,6 +135,10 @@ public class MyActivity extends Activity
     private Button button_delete;
     private Button button_next;
     private Button button_back;
+    private Button button_finish;
+    private Button button_delete_confirm;
+    private Button button_delete_cancel;
+    private RelativeLayout layout_delete_dialog;
     private int photo_angle;//标识当前显示的图片的方向信息,90表示竖拍照片，0表示横拍照片
     private int photo_width;//标识当前显示的图片的信息
     private int photo_height;//标识当前显示的图片的信息
@@ -225,6 +231,10 @@ public class MyActivity extends Activity
         button_delete = (Button) findViewById(R.id.button_delete);
         button_next = (Button) findViewById(R.id.button_next);
         button_back = (Button) findViewById(R.id.button_back);
+        button_finish = (Button) findViewById(R.id.button_finish);
+        button_delete_confirm = (Button) findViewById(R.id.button_delete_confirm);
+        button_delete_cancel = (Button) findViewById(R.id.button_delete_cancel);
+        layout_delete_dialog = (RelativeLayout) findViewById(R.id.layout_delete_dialog);
         photo_angle = 0;
 
         button_flash = (Button) findViewById(R.id.button_flash);
@@ -484,17 +494,6 @@ public class MyActivity extends Activity
                     public void onClick(View v) {
                         //转到Settings设置界面
                         startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), REQ_SYSTEM_SETTINGS);
-
-//                        Camera.Parameters params = mCamera.getParameters();
-//                        if (params.getPictureSize().width == 3264) {
-//                            params.setPictureSize(5248, 3936);
-//                            button_settings.setText("20M");
-//                        } else {
-//                            params.setPictureSize(3264, 2448);
-//                            button_settings.setText("8M");
-//                        }
-//                        mCamera.setParameters(params);
-
                     }
                 }
         );
@@ -664,7 +663,39 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        DeletePhoto();
+                        findViewById(R.id.layout_delete).setVisibility(View.VISIBLE);
+                    }
+                }
+        );
+
+        button_delete_confirm.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        setImage(255);
+                        findViewById(R.id.layout_delete).setVisibility(View.INVISIBLE);
+                    }
+                }
+        );
+
+        button_delete_cancel.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        findViewById(R.id.layout_delete).setVisibility(View.INVISIBLE);
+                    }
+                }
+        );
+
+        button_finish.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSensorManager.unregisterListener(MyActivity.this);
+                        releaseMediaRecorder();
+                        releaseCamera();
+                        finish();
                     }
                 }
         );
@@ -1016,8 +1047,16 @@ public class MyActivity extends Activity
                 case 1:
                     mCursor.moveToNext();
                     break;
+                case 255:
+                    //delete photo
+                    mContentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, BaseColumns._ID + "=" + mCursor.getString(0), null);
+                    mCursor.moveToNext();
+                    break;
             }
-            cursorPosition = mCursor.getPosition();
+
+            if(i!=255) {
+                cursorPosition = mCursor.getPosition();
+            }
 
             //cursor.moveToFirst();// 把游标移动到首位，因为这里的Uri是包含ID的所以是唯一的不需要循环找指向第一个就是了
             String filePath = mCursor.getString(mCursor.getColumnIndex("_data"));// 获取图片路
@@ -1285,6 +1324,12 @@ public class MyActivity extends Activity
         button_delete.setRotation(r);
         button_next.setRotation(r);
         button_back.setRotation(r);
+        button_finish.setRotation(r);
+        button_delete_confirm.setRotation(r);
+        button_delete_cancel.setRotation(r);
+        layout_delete_dialog.setRotation(r);
+        button_delete_confirm.setRotation(0);
+        button_delete_cancel.setRotation(0);
 
         //这两个控件不旋转，里面的图片旋转
         Matrix matrix = new Matrix();
