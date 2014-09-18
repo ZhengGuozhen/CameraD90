@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <padding android:left="0dp" android:top="0dp" android:right="0dp"
+        android:bottom="0dp" />
+
+    <corners
+        android:bottomLeftRadius="28dp"
+        android:bottomRightRadius="28dp"
+        android:topLeftRadius="28dp"
+        android:topRightRadius="28dp" />
+    <!-- 圆角，你也可以对不同的角设置不同的数值 -->
+
+    <solid android:color="#00000000" />
+    <!-- 形状的填充色 -->
+
+    <stroke
+        android:width="4dp"
+        android:color="#000000" />
+    <!-- 边框宽度和颜色 -->
+</shape><!-- From: file:/E:/GitHub/CameraD90/app/src/main/res/drawable-xxhdpi/setting_button.xml -->

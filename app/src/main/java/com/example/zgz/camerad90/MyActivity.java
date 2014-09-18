@@ -33,6 +33,7 @@ import android.media.Image;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.opengl.Visibility;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -127,6 +128,8 @@ public class MyActivity extends Activity
     private Button button_close;
 
     //review相关的变量
+    private float ReviewWidth = 1080;
+    private float ReviewHeight = 1440;
     private RelativeLayout layout_review;
     private ImageView imageView_review;
     private ImageView imageView_review_zoom;
@@ -142,6 +145,7 @@ public class MyActivity extends Activity
     private int photo_angle;//标识当前显示的图片的方向信息,90表示竖拍照片，0表示横拍照片
     private int photo_width;//标识当前显示的图片的信息
     private int photo_height;//标识当前显示的图片的信息
+    private TouchListener_review mTouchListener_review;
 
     private RelativeLayout layout_buttons;
     private RelativeLayout layout_draw;
@@ -210,19 +214,25 @@ public class MyActivity extends Activity
         camera_preview = (FrameLayout) findViewById(R.id.camera_preview);
         camera_preview.addView(mPreview);
 
+        //拍照界面相关控件
         ivFocus = (ImageView) findViewById(R.id.ivFocus);
         ivMetering = (ImageView) findViewById(R.id.ivMetering);
         button_capture = (Button) findViewById(R.id.button_capture);
         button_settings = (Button) findViewById(R.id.button_settings);
         button_record = (Button) findViewById(R.id.button_record);
-
+        button_flash = (Button) findViewById(R.id.button_flash);
+        layout_buttons = (RelativeLayout) findViewById(R.id.layout_buttons);
+        layout_draw = (RelativeLayout) findViewById(R.id.layout_draw);
+        button_zoom = (Button) findViewById(R.id.button_zoom);
+        button_focusMode = (Button) findViewById(R.id.button_focusMode);
+        button_close = (Button) findViewById(R.id.button_close);
         button_ec = (Button) findViewById(R.id.button_ec);
         button_ecAdd = (Button) findViewById(R.id.button_ecAdd);
         button_ecReduce = (Button) findViewById(R.id.button_ecReduce);
-
         button_shutter = (Button) findViewById(R.id.button_shutter);
         button_lock = (Button) findViewById(R.id.button_lock);
 
+        //review界面相关控件
         layout_review=(RelativeLayout)findViewById(R.id.layout_review);
         imageView_review = (ImageView) findViewById(R.id.imageView_review);
         imageView_review_zoom = (ImageView) findViewById(R.id.imageView_review_zoom);
@@ -236,13 +246,9 @@ public class MyActivity extends Activity
         button_delete_cancel = (Button) findViewById(R.id.button_delete_cancel);
         layout_delete_dialog = (RelativeLayout) findViewById(R.id.layout_delete_dialog);
         photo_angle = 0;
+        mTouchListener_review=new TouchListener_review();
 
-        button_flash = (Button) findViewById(R.id.button_flash);
-        layout_buttons = (RelativeLayout) findViewById(R.id.layout_buttons);
-        layout_draw = (RelativeLayout) findViewById(R.id.layout_draw);
-        button_zoom = (Button) findViewById(R.id.button_zoom);
-        button_focusMode = (Button) findViewById(R.id.button_focusMode);
-        button_close = (Button) findViewById(R.id.button_close);
+
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layout_draw.getLayoutParams();
         layoutParams.width = (int) previewMaxX;
@@ -330,7 +336,7 @@ public class MyActivity extends Activity
     }
 
     private void setUI(){
-        ivFocus.setOnTouchListener(new mTouchListener1());
+        ivFocus.setOnTouchListener(new TouchListener_ivFocus());
 
         button_record.setOnClickListener(
                 new View.OnClickListener() {
@@ -617,7 +623,7 @@ public class MyActivity extends Activity
 //                }
 //        );
 
-        imageView_review.setOnTouchListener(new mTouchListener());
+        imageView_review.setOnTouchListener(mTouchListener_review);
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1027,8 +1033,6 @@ public class MyActivity extends Activity
 
         // 不管是拍照还是选择图片每张图片都有在数据中存储也存储有对应旋转角度orientation值
         // 所以我们在取出图片是把角度值取出以便能正确的显示图片,没有旋转时的效果观看
-
-        //ContentResolver cr = this.getContentResolver();
         ContentResolver mContentResolver = this.getContentResolver();
         Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 null, null, null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");// 根据Uri从数据库中找
@@ -1062,42 +1066,45 @@ public class MyActivity extends Activity
             String filePath = mCursor.getString(mCursor.getColumnIndex("_data"));// 获取图片路
             String orientation = mCursor.getString(mCursor.getColumnIndex("orientation"));// 获取旋转的角度
             mCursor.close();
+
             photo_angle = 0;
             if (orientation != null && !"".equals(orientation)) {
                 photo_angle = Integer.parseInt(orientation);
             }
 
             if (filePath != null) {
+                Bitmap bitmap = null;
                 BitmapFactory.Options opts = new BitmapFactory.Options();
                 //设置解析器不去真正的解析这个位图，而是解析这个图片的out输出信息(宽度，高度)，不会为图片的每个点申请内在空间
                 opts.inJustDecodeBounds = true;
                 //得到图片的宽高信息
                 BitmapFactory.decodeFile(filePath,opts);
                 //真正的解析这个图片，只解析为原图的inSampleSize分之一
-                opts.inSampleSize = computeSampleSize(opts, -1, 1080*1440);
+                opts.inSampleSize = computeSampleSize(opts, -1, 600*800);
                 opts.inJustDecodeBounds = false;
-                Bitmap bitmap = BitmapFactory.decodeFile(filePath, opts);//根据Path读取资源图片
+                bitmap = BitmapFactory.decodeFile(filePath, opts);//根据Path读取资源图片
 
-                imageView_review.setImageBitmap(bitmap);
-                imageView_review_fake.setImageBitmap(bitmap);
-
+                //这里的宽高是原始值，不分横竖
                 photo_width = bitmap.getWidth();
                 photo_height = bitmap.getHeight();
 
                 Matrix matrix = new Matrix();
                 if(photoDegree == 90) {
                     //竖屏
-                    matrix = imageCenter(previewMaxX, previewMaxY,
+                    matrix = imageCenter(ReviewWidth, ReviewHeight,
                             photo_width, photo_height, 0);
                 }else if(photoDegree == 0){
                     //左横屏
-                    matrix = imageCenter(previewMaxY, previewMaxX,
+                    matrix = imageCenter(ReviewHeight, ReviewWidth,
                             photo_width, photo_height, 1);
                 }else if(photoDegree == 180){
                     //右横屏
-                    matrix = imageCenter(previewMaxY, previewMaxX,
+                    matrix = imageCenter(ReviewHeight, ReviewWidth,
                             photo_width, photo_height, 2);
                 }
+
+                imageView_review.setImageBitmap(bitmap);
+                imageView_review_fake.setImageBitmap(bitmap);
 
                 imageView_review.setImageMatrix(matrix);
                 imageView_review_fake.setImageMatrix(matrix);
@@ -1334,11 +1341,11 @@ public class MyActivity extends Activity
         //这两个控件不旋转，里面的图片旋转
         Matrix matrix = new Matrix();
         if(r==90){
-            matrix = imageCenter(previewMaxY,previewMaxX,photo_width, photo_height, 1);
+            matrix = imageCenter(ReviewHeight,ReviewWidth,photo_width, photo_height, 1);
         }else if(r==0){
-            matrix = imageCenter(previewMaxX,previewMaxY,photo_width, photo_height, 0);
+            matrix = imageCenter(ReviewWidth,ReviewHeight,photo_width, photo_height, 0);
         }else if(r==-90){
-            matrix = imageCenter(previewMaxY,previewMaxX,photo_width, photo_height, 2);
+            matrix = imageCenter(ReviewHeight,ReviewWidth,photo_width, photo_height, 2);
         }
 
         imageView_review.setImageMatrix(matrix);
@@ -1653,7 +1660,7 @@ public class MyActivity extends Activity
         return true;
     }
 
-    private final class mTouchListener implements View.OnTouchListener {
+    private final class TouchListener_review implements View.OnTouchListener {
 
         /** 记录是拖拉照片模式还是放大缩小照片模式 */
         private int mode = 0;// 初始状态
@@ -1673,6 +1680,10 @@ public class MyActivity extends Activity
         private float startDis;
         /** 两个手指的中间点 */
         private PointF midPoint;
+
+        /** 手势 */
+        private GestureDetectorCompat mDetector = new GestureDetectorCompat(
+                getApplicationContext(), new GestureListener_review());
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -1725,7 +1736,11 @@ public class MyActivity extends Activity
                     }
                     break;
             }
+
             imageView_review.setImageMatrix(matrix);
+
+            mDetector.onTouchEvent(event);
+
             return true;
         }
 
@@ -1746,7 +1761,70 @@ public class MyActivity extends Activity
 
     }
 
-    private final class mTouchListener1 implements View.OnTouchListener {
+    private float[] getPhotoPosition(){
+        //获取经过matrix变换之后的图片的位置
+        Matrix matrix = imageView_review.getImageMatrix();
+//            Rect rect = imageView_review.getDrawable().getBounds();
+        float[] values = new float[9]; matrix.getValues(values);
+        float[] result = new float[4];
+
+        float left=0;
+        float top=0;
+        float right=0;
+        float bottom=0;
+
+        if(photo_angle==0){
+            left = values[2];
+            top = values[5];
+            right = left + photo_width * values[0];
+            bottom = top + photo_height * values[4];
+        }else if(photo_angle==90){
+            left = values[2];
+            top = values[5];
+            right = left + photo_height * values[1];
+            bottom = top + photo_width * values[3];
+        }else if(photo_angle==180){
+            left = values[2];
+            top = values[5];
+            right = left + photo_width * values[0];
+            bottom = top + photo_height * values[4];
+        }
+
+        result[0]=left;
+        result[1]=top;
+        result[2]=right;
+        result[3]=bottom;
+
+        return result;
+    }
+
+    class GestureListener_review extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent event) {
+            return true;
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent event) {
+            float[] photoPosition = getPhotoPosition();
+
+//            Matrix matrix=new Matrix();
+//            matrix.set(imageView_review.getImageMatrix());
+//            matrix.postScale(5,5,event.getX(),event.getY());
+//            imageView_review.setImageMatrix(matrix);
+//
+//            MyTask mTask = new MyTask();
+//            mTask.execute((int)(event.getX()+0.5),(int)(event.getY()+0.5));
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+            return true;
+        }
+    }
+
+    private final class TouchListener_ivFocus implements View.OnTouchListener {
         private static final int NONE = 0;
         private static final int MOVE = 1;
         private static final int ZOOM = 2;
@@ -1757,7 +1835,7 @@ public class MyActivity extends Activity
         private int startZoom;
 
         private GestureDetectorCompat mDetector = new GestureDetectorCompat(
-                getApplicationContext(), new MyGestureListener());
+                getApplicationContext(), new GestureListener_ivFocus());
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -1855,7 +1933,7 @@ public class MyActivity extends Activity
         }
     }
 
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+    class GestureListener_ivFocus extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDown(MotionEvent event) {
             return true;
@@ -1888,6 +1966,78 @@ public class MyActivity extends Activity
         @Override
         public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
             return true;
+        }
+    }
+
+    private class MyTask extends AsyncTask<Integer, Integer, Bitmap> {
+        //这里定义变量，在doInBackground和onPostExecute中都可以使用
+        private Matrix matrix= new Matrix();
+
+        //onPreExecute方法用于在执行后台任务前做一些UI操作
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        //doInBackground方法内部执行后台任务,不可在此方法内修改UI
+        @Override
+        protected Bitmap doInBackground(Integer... params) {
+            ContentResolver mContentResolver = getApplicationContext().getContentResolver();
+            Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    null, null, null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC");// 根据Uri从数据库中找
+            mCursor.moveToPosition(cursorPosition);
+
+            String filePath = mCursor.getString(mCursor.getColumnIndex("_data"));// 获取图片路
+            String orientation = mCursor.getString(mCursor.getColumnIndex("orientation"));// 获取旋转的角度
+            mCursor.close();
+
+            photo_angle = 0;
+            if (orientation != null && !"".equals(orientation)) {
+                photo_angle = Integer.parseInt(orientation);
+            }
+
+            if (filePath != null) {
+                Bitmap bitmap = null;
+                BitmapFactory.Options opts = new BitmapFactory.Options();
+                //设置解析器不去真正的解析这个位图，而是解析这个图片的out输出信息(宽度，高度)，不会为图片的每个点申请内在空间
+                opts.inJustDecodeBounds = true;
+                //得到图片的宽高信息
+                BitmapFactory.decodeFile(filePath,opts);
+                //真正的解析这个图片，只解析为原图的inSampleSize分之一
+                opts.inSampleSize = computeSampleSize(opts, -1, 4096*4096);
+                opts.inJustDecodeBounds = false;
+                bitmap = BitmapFactory.decodeFile(filePath, opts);//根据Path读取资源图片
+
+                //先将大图缩放到原来的小图的大小，再经过和小图一样的matrix操作
+                float scale = (float)photo_width/bitmap.getWidth();
+                photo_width = bitmap.getWidth();
+                photo_height = bitmap.getHeight();
+                matrix.postScale(scale,scale,0,0);
+                matrix.postConcat(imageView_review.getImageMatrix());
+
+                return bitmap;
+            }
+
+            return null;
+        }
+
+        //onProgressUpdate方法用于更新进度信息
+        @Override
+        protected void onProgressUpdate(Integer... progresses) {
+
+        }
+
+        //onPostExecute方法用于在执行完后台任务后更新UI,显示结果
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            imageView_review.setImageBitmap(result);
+            imageView_review.setImageMatrix(matrix);
+        }
+
+        //onCancelled方法用于在取消执行中的任务时更改UI
+        @Override
+        protected void onCancelled() {
+
         }
     }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <padding android:left="0dp" android:top="0dp" android:right="0dp"
+        android:bottom="0dp" />
+
+    <corners
+        android:bottomLeftRadius="25dp"
+        android:bottomRightRadius="25dp"
+        android:topLeftRadius="25dp"
+        android:topRightRadius="25dp" />
+
+    <solid android:color="#00000000" />
+    <!-- 形状的填充色 -->
+
+    <stroke
+        android:width="4dp"
+        android:color="#000000" />
+    <!-- 边框宽度和颜色 -->
+</shape><!-- From: file:/E:/GitHub/CameraD90/app/src/main/res/drawable-xxhdpi/circle_button_50dp.xml -->
