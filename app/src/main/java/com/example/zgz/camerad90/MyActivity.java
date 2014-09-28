@@ -132,11 +132,12 @@ public class MyActivity extends Activity
     private float ReviewHeight = 1440;
     private RelativeLayout layout_review;
     private ImageView imageView_review;
-    private ImageView imageView_review_zoom;
+    private ImageView imageView_review_touch;
     private ImageView imageView_review_fake;
     private Button button_previous;
     private Button button_delete;
     private Button button_next;
+    private Button button_reset_photo;
     private Button button_back;
     private Button button_finish;
     private Button button_delete_confirm;
@@ -145,7 +146,6 @@ public class MyActivity extends Activity
     private int photo_angle;//标识当前显示的图片的方向信息,90表示竖拍照片，0表示横拍照片
     private int photo_width;//标识当前显示的图片的信息
     private int photo_height;//标识当前显示的图片的信息
-    private TouchListener_review mTouchListener_review;
 
     private RelativeLayout layout_buttons;
     private RelativeLayout layout_draw;
@@ -235,18 +235,18 @@ public class MyActivity extends Activity
         //review界面相关控件
         layout_review=(RelativeLayout)findViewById(R.id.layout_review);
         imageView_review = (ImageView) findViewById(R.id.imageView_review);
-        imageView_review_zoom = (ImageView) findViewById(R.id.imageView_review_zoom);
+        imageView_review_touch = (ImageView) findViewById(R.id.imageView_review_touch);
         imageView_review_fake = (ImageView) findViewById(R.id.imageView_review_fake);
         button_previous = (Button) findViewById(R.id.button_previous);
         button_delete = (Button) findViewById(R.id.button_delete);
         button_next = (Button) findViewById(R.id.button_next);
+        button_reset_photo = (Button) findViewById(R.id.button_reset_photo);
         button_back = (Button) findViewById(R.id.button_back);
         button_finish = (Button) findViewById(R.id.button_finish);
         button_delete_confirm = (Button) findViewById(R.id.button_delete_confirm);
         button_delete_cancel = (Button) findViewById(R.id.button_delete_cancel);
         layout_delete_dialog = (RelativeLayout) findViewById(R.id.layout_delete_dialog);
         photo_angle = 0;
-        mTouchListener_review=new TouchListener_review();
 
 
 
@@ -304,6 +304,14 @@ public class MyActivity extends Activity
 
                     switch (captureMode) {
                         case 0:
+                            if(mSharedPreferences.getBoolean("touch_to_capture",false)){
+                                new Handler().postDelayed(new Runnable() {
+                                    public void run() {
+                                        //execute the task
+                                        takePhoto();
+                                    }
+                                }, 200);
+                            }
                             break;
 
                         case 1:
@@ -321,11 +329,10 @@ public class MyActivity extends Activity
 
                                 }
                             }, 200);
-
                             break;
                     }
-                } else//未对焦成功
-                {
+                } else{
+                //未对焦成功
                     drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.RED);
                 }
             }
@@ -485,7 +492,6 @@ public class MyActivity extends Activity
                                     layout_buttons.setVisibility(View.VISIBLE);//取消拍照后显示其他按钮
                                 }
 
-
                                 break;
                         }
 
@@ -594,36 +600,9 @@ public class MyActivity extends Activity
                 }
         );
 
-//        imageView_review_zoom.setOnTouchListener(
-//                new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//
-//                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-//                            case MotionEvent.ACTION_DOWN:
-//                                start1.set(event.getX(),event.getY());
-//                                break;
-//                            case MotionEvent.ACTION_UP:
-//
-//                                break;
-//
-//                            case MotionEvent.ACTION_MOVE:
-//                                RectF zoomArea=new RectF();
-//                                zoomArea.left=start1.x;
-//                                zoomArea.top=start1.y;
-//                                zoomArea.right=event.getX();
-//                                zoomArea.bottom=event.getY();
-//
-//                                drawArea1((ImageView)findViewById(R.id.imageView_review_zoom),zoomArea,Color.GREEN);
-//                                break;
-//                        }
-//
-//                        return true;
-//                    }
-//                }
-//        );
+        imageView_review_touch.setOnTouchListener(new TouchListener_review());
 
-        imageView_review.setOnTouchListener(mTouchListener_review);
+//        imageView_review.setOnTouchListener(new TouchListener_review());
 
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -665,6 +644,39 @@ public class MyActivity extends Activity
                 }
         );
 
+        button_reset_photo.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                            case MotionEvent.ACTION_DOWN:
+                                Matrix matrix = new Matrix();
+                                if(photoDegree == 90) {
+                                    //竖屏
+                                    matrix = imageCenter(ReviewWidth, ReviewHeight,
+                                            photo_width, photo_height, 0);
+                                }else if(photoDegree == 0){
+                                    //左横屏
+                                    matrix = imageCenter(ReviewHeight, ReviewWidth,
+                                            photo_width, photo_height, 1);
+                                }else if(photoDegree == 180){
+                                    //右横屏
+                                    matrix = imageCenter(ReviewHeight, ReviewWidth,
+                                            photo_width, photo_height, 2);
+                                }
+
+                                imageView_review.setImageMatrix(matrix);
+                                imageView_review_fake.setImageMatrix(matrix);
+
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                break;
+                        }
+                        return true;
+                    }
+                }
+        );
+
         button_delete.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -678,7 +690,6 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         setImage(255);
                         findViewById(R.id.layout_delete).setVisibility(View.INVISIBLE);
                     }
@@ -1108,6 +1119,10 @@ public class MyActivity extends Activity
 
                 imageView_review.setImageMatrix(matrix);
                 imageView_review_fake.setImageMatrix(matrix);
+
+                //开线程载入原始图片
+                MyTask mTask = new MyTask();
+                mTask.execute();
             }
         }
     }
@@ -1327,16 +1342,13 @@ public class MyActivity extends Activity
         button_record.setRotation(r);
         button_close.setRotation(r);
 
-        button_previous.setRotation(r);
-        button_delete.setRotation(r);
-        button_next.setRotation(r);
-        button_back.setRotation(r);
-        button_finish.setRotation(r);
-        button_delete_confirm.setRotation(r);
-        button_delete_cancel.setRotation(r);
+//        button_previous.setRotation(r);
+//        button_delete.setRotation(r);
+//        button_next.setRotation(r);
+//        button_reset_photo.setRotation(r);
+//        button_back.setRotation(r);
+//        button_finish.setRotation(r);
         layout_delete_dialog.setRotation(r);
-        button_delete_confirm.setRotation(0);
-        button_delete_cancel.setRotation(0);
 
         //这两个控件不旋转，里面的图片旋转
         Matrix matrix = new Matrix();
@@ -1761,8 +1773,8 @@ public class MyActivity extends Activity
 
     }
 
+    //获取经过matrix变换之后的图片的位置
     private float[] getPhotoPosition(){
-        //获取经过matrix变换之后的图片的位置
         Matrix matrix = imageView_review.getImageMatrix();
 //            Rect rect = imageView_review.getDrawable().getBounds();
         float[] values = new float[9]; matrix.getValues(values);
@@ -1801,20 +1813,17 @@ public class MyActivity extends Activity
     class GestureListener_review extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onDown(MotionEvent event) {
+
             return true;
         }
 
         @Override
         public boolean onSingleTapUp(MotionEvent event) {
-            float[] photoPosition = getPhotoPosition();
+            Matrix matrix = new Matrix();
+            matrix.set(imageView_review.getImageMatrix());
+            matrix.postScale(2, 2, event.getX(), event.getY());
+            imageView_review.setImageMatrix(matrix);
 
-//            Matrix matrix=new Matrix();
-//            matrix.set(imageView_review.getImageMatrix());
-//            matrix.postScale(5,5,event.getX(),event.getY());
-//            imageView_review.setImageMatrix(matrix);
-//
-//            MyTask mTask = new MyTask();
-//            mTask.execute((int)(event.getX()+0.5),(int)(event.getY()+0.5));
             return true;
         }
 
@@ -2008,13 +2017,6 @@ public class MyActivity extends Activity
                 opts.inJustDecodeBounds = false;
                 bitmap = BitmapFactory.decodeFile(filePath, opts);//根据Path读取资源图片
 
-                //先将大图缩放到原来的小图的大小，再经过和小图一样的matrix操作
-                float scale = (float)photo_width/bitmap.getWidth();
-                photo_width = bitmap.getWidth();
-                photo_height = bitmap.getHeight();
-                matrix.postScale(scale,scale,0,0);
-                matrix.postConcat(imageView_review.getImageMatrix());
-
                 return bitmap;
             }
 
@@ -2029,8 +2031,15 @@ public class MyActivity extends Activity
 
         //onPostExecute方法用于在执行完后台任务后更新UI,显示结果
         @Override
-        protected void onPostExecute(Bitmap result) {
-            imageView_review.setImageBitmap(result);
+        protected void onPostExecute(Bitmap bitmap) {
+            //先将大图缩放到原来的小图的大小，再经过和小图一样的matrix操作
+            float scale = (float)photo_width/bitmap.getWidth();
+            photo_width = bitmap.getWidth();
+            photo_height = bitmap.getHeight();
+            matrix.postScale(scale,scale,0,0);
+            matrix.postConcat(imageView_review.getImageMatrix());
+
+            imageView_review.setImageBitmap(bitmap);
             imageView_review.setImageMatrix(matrix);
         }
 

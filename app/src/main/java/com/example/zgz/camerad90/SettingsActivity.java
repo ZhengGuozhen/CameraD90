@@ -210,7 +210,7 @@ public class SettingsActivity extends PreferenceActivity {
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
     }
-//
+
 //    /**
 //     * This fragment shows general preferences only. It is used when the
 //     * activity is showing a two-pane settings UI.

@@ -2,6 +2,8 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings">
+    <Preference android:title="Settings" />
+
     <PreferenceCategory android:title="Camera Settings">
         <ListPreference
             android:dialogTitle="Choose Photo Size"
@@ -18,6 +20,10 @@
             android:inputType="number"
             android:singleLine="true"
             android:maxLines="1" />
+        <CheckBoxPreference
+            android:key="touch_to_capture"
+            android:title="Touch to capture"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Video Settings">

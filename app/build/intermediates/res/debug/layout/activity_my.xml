@@ -225,7 +225,7 @@
         <ImageView
             android:layout_width="360dp"
             android:layout_height="480dp"
-            android:id="@+id/imageView_review_zoom" />
+            android:id="@+id/imageView_review_touch" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -233,7 +233,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="70dp" >
             <Button
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:text="&lt;"
@@ -241,6 +241,13 @@
                 android:id="@+id/button_previous" />
             <Button
                 android:layout_weight="1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="O"
+                android:textSize="40sp"
+                android:id="@+id/button_reset_photo" />
+            <Button
+                android:layout_weight="2"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:text="&gt;"
