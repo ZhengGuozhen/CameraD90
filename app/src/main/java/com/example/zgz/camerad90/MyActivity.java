@@ -3,6 +3,7 @@ package com.example.zgz.camerad90;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,6 +37,7 @@ import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.provider.MediaStore;
@@ -126,8 +128,16 @@ public class MyActivity extends Activity
     private Button button_flash;
     private Button button_focusMode;
     private Button button_close;
+    private RelativeLayout layout_buttons;
+    private RelativeLayout layout_draw;
+
+    private int captureMode = 0;
+    private boolean focusing = false;
+    private boolean saving = false;
+    private boolean isRecording = false;
 
     //review相关的变量
+    private int cursorPosition;//标识当前显示图片的索引
     private float ReviewWidth = 1080;
     private float ReviewHeight = 1440;
     private RelativeLayout layout_review;
@@ -146,20 +156,15 @@ public class MyActivity extends Activity
     private int photo_angle;//标识当前显示的图片的方向信息,90表示竖拍照片，0表示横拍照片
     private int photo_width;//标识当前显示的图片的信息
     private int photo_height;//标识当前显示的图片的信息
-
-    private RelativeLayout layout_buttons;
-    private RelativeLayout layout_draw;
-
-    private int captureMode = 0;
-    private boolean focusing = false;
-    private boolean saving = false;
-    private boolean isRecording = false;
+    private MyTask loadTask;
+    private boolean loading = false;
 
     private SharedPreferences mSharedPreferences;
 
-    private View mDecorView;
+    private Vibrator vibrator;
+    private long VIBRATE_TIME = 50;
 
-    private int cursorPosition;//标识当前显示图片的索引
+    private View mDecorView;
 
     // This snippet hides the system bars.
     private void hideSystemUI() {
@@ -200,6 +205,8 @@ public class MyActivity extends Activity
         mDecorView = getWindow().getDecorView();
         hideSystemUI();
         setContentView(R.layout.activity_my);
+
+        vibrator = (Vibrator) getSystemService(Service.VIBRATOR_SERVICE);
 
         mSharedPreferences= PreferenceManager.getDefaultSharedPreferences(this) ;
 
@@ -504,6 +511,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         //转到Settings设置界面
                         startActivityForResult(new Intent(getApplicationContext(), SettingsActivity.class), REQ_SYSTEM_SETTINGS);
                     }
@@ -514,6 +522,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         Camera.Parameters params = mCamera.getParameters();
                         params.setExposureCompensation(0);
                         mCamera.setParameters(params);
@@ -526,6 +535,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         Camera.Parameters params = mCamera.getParameters();
                         int index = params.getExposureCompensation();
                         if (index < params.getMaxExposureCompensation()) index++;
@@ -540,6 +550,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         Camera.Parameters params = mCamera.getParameters();
                         int index = params.getExposureCompensation();
                         if (index > params.getMinExposureCompensation()) index--;
@@ -554,6 +565,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         Camera.Parameters params = mCamera.getParameters();
                         params.setZoom(0);
                         mCamera.setParameters(params);
@@ -566,6 +578,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         Camera.Parameters params = mCamera.getParameters();
                         //判断字符串是否相等使用equals方法!!!
                         if (params.getFlashMode().equals(Camera.Parameters.FLASH_MODE_OFF)) {
@@ -607,6 +620,7 @@ public class MyActivity extends Activity
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //vibrator.vibrate(VIBRATE_TIME);
                 layout_review.setVisibility(View.INVISIBLE);
                 mDrawerLayout.closeDrawers();
             }
@@ -618,6 +632,12 @@ public class MyActivity extends Activity
                     public boolean onTouch(View v, MotionEvent event) {
                         switch (event.getAction() & MotionEvent.ACTION_MASK) {
                             case MotionEvent.ACTION_DOWN:
+                                //vibrator.vibrate(VIBRATE_TIME);
+                                Animation scale = new ScaleAnimation(1.0f, 1.0f, 0.8f, 0.8f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                                scale.setDuration(150);
+                                v.startAnimation(scale);
+
+                                loadTask.cancel(true);
                                 setImage(-1);
                                 break;
                             case MotionEvent.ACTION_UP:
@@ -634,6 +654,12 @@ public class MyActivity extends Activity
                     public boolean onTouch(View v, MotionEvent event) {
                         switch (event.getAction() & MotionEvent.ACTION_MASK) {
                             case MotionEvent.ACTION_DOWN:
+                                //vibrator.vibrate(VIBRATE_TIME);
+                                Animation scale = new ScaleAnimation(1.0f, 1.0f, 0.8f, 0.8f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                                scale.setDuration(150);
+                                v.startAnimation(scale);
+
+                                loadTask.cancel(true);
                                 setImage(1);
                                 break;
                             case MotionEvent.ACTION_UP:
@@ -644,43 +670,37 @@ public class MyActivity extends Activity
                 }
         );
 
-        button_reset_photo.setOnTouchListener(
-                new View.OnTouchListener() {
+        button_reset_photo.setOnClickListener(
+                new View.OnClickListener() {
                     @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-                            case MotionEvent.ACTION_DOWN:
-                                Matrix matrix = new Matrix();
-                                if(photoDegree == 90) {
-                                    //竖屏
-                                    matrix = imageCenter(ReviewWidth, ReviewHeight,
-                                            photo_width, photo_height, 0);
-                                }else if(photoDegree == 0){
-                                    //左横屏
-                                    matrix = imageCenter(ReviewHeight, ReviewWidth,
-                                            photo_width, photo_height, 1);
-                                }else if(photoDegree == 180){
-                                    //右横屏
-                                    matrix = imageCenter(ReviewHeight, ReviewWidth,
-                                            photo_width, photo_height, 2);
-                                }
-
-                                imageView_review.setImageMatrix(matrix);
-                                imageView_review_fake.setImageMatrix(matrix);
-
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                break;
+                    public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
+                        Matrix matrix = new Matrix();
+                        if(photoDegree == 90) {
+                            //竖屏
+                            matrix = imageCenter(ReviewWidth, ReviewHeight,
+                                    photo_width, photo_height, 0);
+                        }else if(photoDegree == 0){
+                            //左横屏
+                            matrix = imageCenter(ReviewHeight, ReviewWidth,
+                                    photo_width, photo_height, 1);
+                        }else if(photoDegree == 180){
+                            //右横屏
+                            matrix = imageCenter(ReviewHeight, ReviewWidth,
+                                    photo_width, photo_height, 2);
                         }
-                        return true;
+
+                        imageView_review.setImageMatrix(matrix);
+                        imageView_review_fake.setImageMatrix(matrix);
                     }
                 }
         );
-
+        
         button_delete.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         findViewById(R.id.layout_delete).setVisibility(View.VISIBLE);
                     }
                 }
@@ -690,6 +710,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         setImage(255);
                         findViewById(R.id.layout_delete).setVisibility(View.INVISIBLE);
                     }
@@ -700,6 +721,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         findViewById(R.id.layout_delete).setVisibility(View.INVISIBLE);
                     }
                 }
@@ -709,6 +731,7 @@ public class MyActivity extends Activity
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //vibrator.vibrate(VIBRATE_TIME);
                         mSensorManager.unregisterListener(MyActivity.this);
                         releaseMediaRecorder();
                         releaseCamera();
@@ -720,6 +743,7 @@ public class MyActivity extends Activity
         button_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //vibrator.vibrate(VIBRATE_TIME);
                 mSensorManager.unregisterListener(MyActivity.this);
                 releaseMediaRecorder();
                 releaseCamera();
@@ -1041,7 +1065,6 @@ public class MyActivity extends Activity
     }
 
     private void setImage(int i) {
-
         // 不管是拍照还是选择图片每张图片都有在数据中存储也存储有对应旋转角度orientation值
         // 所以我们在取出图片是把角度值取出以便能正确的显示图片,没有旋转时的效果观看
         ContentResolver mContentResolver = this.getContentResolver();
@@ -1121,8 +1144,8 @@ public class MyActivity extends Activity
                 imageView_review_fake.setImageMatrix(matrix);
 
                 //开线程载入原始图片
-                MyTask mTask = new MyTask();
-                mTask.execute();
+                loadTask = new MyTask();
+                loadTask.execute();
             }
         }
     }
@@ -1985,7 +2008,6 @@ public class MyActivity extends Activity
         //onPreExecute方法用于在执行后台任务前做一些UI操作
         @Override
         protected void onPreExecute() {
-
         }
 
         //doInBackground方法内部执行后台任务,不可在此方法内修改UI
@@ -2046,7 +2068,7 @@ public class MyActivity extends Activity
         //onCancelled方法用于在取消执行中的任务时更改UI
         @Override
         protected void onCancelled() {
-
+            super.onCancelled();
         }
     }
 

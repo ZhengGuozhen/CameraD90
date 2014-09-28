@@ -228,27 +228,25 @@
             android:id="@+id/imageView_review_touch" />
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="70dp" >
             <Button
-                android:layout_weight="2"
-                android:layout_width="50dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="&lt;"
                 android:textSize="40sp"
                 android:id="@+id/button_previous" />
             <Button
-                android:layout_weight="1"
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="O"
                 android:textSize="40sp"
                 android:id="@+id/button_reset_photo" />
             <Button
-                android:layout_weight="2"
-                android:layout_width="50dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="&gt;"
                 android:textSize="40sp"
@@ -257,26 +255,24 @@
         </LinearLayout>
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
             <Button
-                android:layout_weight="1"
-                android:layout_width="50dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="B"
                 android:textSize="40sp"
                 android:id="@+id/button_back" />
             <Button
-                android:layout_weight="1"
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="X"
                 android:textSize="40sp"
                 android:id="@+id/button_delete" />
             <Button
-                android:layout_weight="1"
-                android:layout_width="50dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="F"
                 android:textSize="40sp"
