@@ -2,7 +2,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="Settings">
-    <Preference android:title="Settings" />
 
     <PreferenceCategory android:title="Camera Settings">
         <ListPreference
@@ -37,7 +36,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="About">
-
+        <Preference android:title="Author: ZGZ" />
     </PreferenceCategory>
 
 </PreferenceScreen>

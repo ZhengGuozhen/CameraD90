@@ -137,6 +137,9 @@
                     <item>
 300
                     </item>
+                    <item>
+os500
+                    </item>
                 </string-array>
                 <string-array name="photo_size_key" >
                     <item>
@@ -147,6 +150,9 @@
                     </item>
                     <item>
 3m
+                    </item>
+                    <item>
+Over Sampling 5m
                     </item>
                 </string-array>
             </file>

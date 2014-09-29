@@ -112,8 +112,9 @@ public class MyActivity extends Activity
     private MediaRecorder mMediaRecorder;
     private SensorManager mSensorManager;
     private Sensor mSensor;
-    private int photoDegree = 90;//0表示横屏，90表示竖屏
+    private int photoDegree = 90;//0表示横屏，90表示竖屏,此变量随是实时变化的
     private int oldPhotoDegree = 90;//0表示横屏，90表示竖屏
+    private int nowPhotoDegree = 90;//表示当前拍摄图片的方向信息，用于超采样500万像素模式
     private ImageView ivFocus;
     private ImageView ivMetering;
     private Button button_capture;
@@ -824,6 +825,8 @@ public class MyActivity extends Activity
             params.setPictureSize(3264, 2448);
         }else if(photo_size.equals("300")){
             params.setPictureSize(2048, 1536);
+        }else if(photo_size.equals("os500")){
+            params.setPictureSize(5248, 3936);//超采样500万像素
         }
 
         String jpeg_quality=mSharedPreferences.getString("jpeg_quality","85");
@@ -952,9 +955,37 @@ public class MyActivity extends Activity
             }
 
             try {
-                FileOutputStream fos = new FileOutputStream(pictureFile);
-                fos.write(data);
-                fos.close();
+                if(mSharedPreferences.getString("photo_size","800").equals("os500")){
+                    Bitmap bitmap = OverSampling.convert(
+                            BitmapFactory.decodeByteArray(data, 0,data.length));
+
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG,
+                            Integer.parseInt(mSharedPreferences.getString("jpeg_quality","85")),
+                            fos);
+                    fos.flush();
+                    fos.close();
+
+                    ExifInterface exif=new ExifInterface(pictureFile.getPath());
+                    if(nowPhotoDegree == 90) {
+                        exif.setAttribute(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_ROTATE_90+"");
+                    }else if(nowPhotoDegree == 0){
+                        exif.setAttribute(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL+"");
+                    }else if(nowPhotoDegree == 180){
+                        exif.setAttribute(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_ROTATE_180+"");
+                    }
+                    exif.saveAttributes();
+
+                   //bitmap用完后一定要释放，否则多次拍照后OutOfMemoryError
+                    if (!bitmap.isRecycled()) {
+                        bitmap.recycle();
+                    }
+
+                }else {
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+                    fos.write(data);
+                    fos.close();
+                }
 
                 //让保存的图片可以在媒体库中显示！！！
                 Intent intent = new Intent(); //新建一个Intent，用来发广播
@@ -1619,6 +1650,7 @@ public class MyActivity extends Activity
 
             Camera.Parameters parameters = mCamera.getParameters();
             //设置保存下来的图片旋转，不是预览的旋转
+            nowPhotoDegree=photoDegree;
             parameters.setRotation(photoDegree);
             mCamera.setParameters(parameters);
             // get an image from the camera
