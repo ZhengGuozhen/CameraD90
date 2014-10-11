@@ -1187,7 +1187,7 @@ public class MyActivity extends Activity
         Matrix matrix = new Matrix();
 
         //解析的图片是没有旋转的，竖拍的照片须要将宽高反转
-        if (photo_angle == 90) {
+        if (photo_angle == 90 || photo_angle == 270) {
             int temp = picWidth;
             picWidth = picHeight;
             picHeight = temp;
@@ -1222,6 +1222,10 @@ public class MyActivity extends Activity
                 matrix.postRotate(180);
                 dx = windowWidth/2+picWidth*scale/2;
                 dy = windowHeight/2+picHeight*scale/2;
+            }else if(photo_angle == 270){
+                matrix.postRotate(-90);
+                dx = windowWidth/2-picWidth*scale/2;
+                dy = windowHeight/2+picHeight*scale/2;
             }
             matrix.postTranslate(dx, dy);
         }else if(mode==1){
@@ -1238,6 +1242,9 @@ public class MyActivity extends Activity
                 matrix.postRotate(-90);
                 dx = windowHeight/2-picHeight*scale/2;
                 dy = windowWidth/2+picWidth*scale/2;
+            }else if(photo_angle == 270){
+                dx = windowHeight/2-picHeight*scale/2;
+                dy = windowWidth/2-picWidth*scale/2;
             }
             matrix.postTranslate(dx, dy);
         }else if(mode==2){
@@ -1253,6 +1260,10 @@ public class MyActivity extends Activity
                 matrix.postRotate(90);
                 dx = windowHeight/2+picHeight*scale/2;
                 dy = windowWidth/2-picWidth*scale/2;
+            }else if(photo_angle == 270){
+                matrix.postRotate(180);
+                dx = windowHeight/2+picHeight*scale/2;
+                dy = windowWidth/2+picWidth*scale/2;
             }
             matrix.postTranslate(dx, dy);
         }

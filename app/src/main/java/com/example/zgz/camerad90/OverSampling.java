@@ -16,11 +16,11 @@ public class OverSampling {
         int w2 = w/2;
         int h2 = h/2;
 
-        Bitmap bitmap2 = Bitmap.createBitmap(w2, h2, Bitmap.Config.RGB_565);
+        Bitmap bitmap2 = Bitmap.createBitmap(w2, h2, Bitmap.Config.ARGB_8888);
 
         int color[]=new int[w*2];
         int color2[]=new int[w2];
-        int rr=0,gg=0,bb=0;
+        int aa=0,rr=0,gg=0,bb=0;
         int i=0,j=0;
 
         for (j = 0; j < h; j+=2) {
@@ -36,10 +36,11 @@ public class OverSampling {
 //
 //                color2[i/2] = Color.rgb(rr/4,gg/4,bb/4);
 
+                aa = ((color[i] >> 24) & 0xFF) + ((color[i+1] >> 24) & 0xFF) + ((color[i+w] >> 24) & 0xFF) + ((color[i+w+1] >> 24) & 0xFF);
                 rr = ((color[i] >> 16) & 0xFF) + ((color[i+1] >> 16) & 0xFF) + ((color[i+w] >> 16) & 0xFF) + ((color[i+w+1] >> 16) & 0xFF);
                 gg = ((color[i] >> 8) & 0xFF) + ((color[i+1] >> 8) & 0xFF) + ((color[i+w] >> 8) & 0xFF) + ((color[i+w+1] >> 8) & 0xFF);
                 bb = (color[i] & 0xFF) + (color[i+1] & 0xFF) + (color[i+w] & 0xFF) + (color[i+w+1] & 0xFF);
-                color2[i/2] = (rr>>2)<<16 | (gg>>2)<<8 | (bb>>2);
+                color2[i>>1] = (aa>>2)<<24 | (rr>>2)<<16 | (gg>>2)<<8 | (bb>>2);
 
             }
 
