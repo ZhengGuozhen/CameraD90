@@ -23,6 +23,10 @@
             android:key="touch_to_capture"
             android:title="Touch to capture"
             android:defaultValue="false" />
+        <CheckBoxPreference
+            android:key="face_detection"
+            android:title="Face Detection"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Video Settings">

@@ -17,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -97,7 +98,7 @@ public class MyActivity extends Activity
     public static final int IN_SAMPLE_SIZE = 5;
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
-    private float focusSize = 200;
+    private float focusSize = 300;
     private float meteringSize = 500;
     private float previewMaxX = 1080;
     private float previewMaxY = 1440;
@@ -166,6 +167,8 @@ public class MyActivity extends Activity
     private long VIBRATE_TIME = 50;
 
     private View mDecorView;
+
+
 
     // This snippet hides the system bars.
     private void hideSystemUI() {
@@ -337,6 +340,10 @@ public class MyActivity extends Activity
 
                                 }
                             }, 200);
+                            break;
+
+                        case 2:
+
                             break;
                     }
                 } else{
@@ -837,6 +844,11 @@ public class MyActivity extends Activity
 
         mCamera.setParameters(params);
         setFocusArea(previewMaxX / 2, previewMaxY / 2, focusSize);
+
+        if(mSharedPreferences.getBoolean("face_detection",false)){
+            mCamera.setFaceDetectionListener(new MyFaceDetectionListener());
+            startFaceDetection();
+        }
 
     }
 
@@ -2079,6 +2091,7 @@ public class MyActivity extends Activity
                 BitmapFactory.decodeFile(filePath,opts);
                 //真正的解析这个图片，只解析为原图的inSampleSize分之一
                 opts.inSampleSize = computeSampleSize(opts, -1, 4096*4096);
+//                opts.inSampleSize = 1;//2070万像素的照片无法显示
                 opts.inJustDecodeBounds = false;
                 bitmap = BitmapFactory.decodeFile(filePath, opts);//根据Path读取资源图片
 
@@ -2114,5 +2127,81 @@ public class MyActivity extends Activity
             super.onCancelled();
         }
     }
+
+    //face detection
+    class MyFaceDetectionListener implements Camera.FaceDetectionListener {
+
+        private int count = 0;
+        private Rect  oldFace = new Rect(0,0,0,0);
+
+        @Override
+        public void onFaceDetection(Camera.Face[] faces, Camera camera) {
+            if (faces.length > 0){
+                Log.d("FaceDetection", "face detected: "+ faces.length +
+                        " Face 1 Location X: " + faces[0].rect.centerX() +
+                        "Y: " + faces[0].rect.centerY() );
+
+//                drawArea(ivMetering, faces[0].rect, Color.YELLOW);
+
+                //忽略无效rect
+                if(faces[0].rect.left<-1000
+                        || faces[0].rect.top<-1000
+                        || faces[0].rect.right>1000
+                        || faces[0].rect.bottom>1000) return;
+
+                Camera.Parameters parameters = mCamera.getParameters();
+
+                //对焦rect与人脸rect距离过大时触发对焦，否则return
+                double distance = Math.sqrt(Math.pow((faces[0].rect.centerX()-parameters.getFocusAreas().get(0).rect.centerX()),2)
+                        +Math.pow((faces[0].rect.centerY()-parameters.getFocusAreas().get(0).rect.centerY()),2));
+                if(distance < 100){
+                    return;
+                }
+
+                //人脸位置稳定后才会对焦，避免构图过程中不断触发对焦
+                double distance1 = Math.sqrt(Math.pow((faces[0].rect.centerX()-oldFace.centerX()),2)
+                        +Math.pow((faces[0].rect.centerY()-oldFace.centerY()),2));
+                oldFace = faces[0].rect;
+                if(distance1 < 20) count++;
+                else count = 0;
+
+                if(count<3){
+                    return;
+                }
+
+                count = 0;
+                if (focusing){
+
+                }else{
+                    focusing = true;
+
+                    if (parameters.getMaxNumFocusAreas() > 0) {
+                        List<Camera.Area> focusAreas = new ArrayList<Camera.Area>();
+                        focusAreas.add(new Camera.Area(faces[0].rect, 1000));
+                        parameters.setFocusAreas(focusAreas);
+                    }
+                    mCamera.setParameters(parameters);
+
+                    drawArea(ivFocus, parameters.getFocusAreas().get(0).rect, Color.CYAN);
+
+                    captureMode = 2;
+                    mCamera.autoFocus(myAutoFocusCallback);
+                }
+
+            }
+        }
+    }
+
+    public void startFaceDetection(){
+        // Try starting Face Detection
+        Camera.Parameters params = mCamera.getParameters();
+
+        // start face detection only *after* preview has started
+        if (params.getMaxNumDetectedFaces() > 0){
+            // camera supports face detection, so can start it:
+            mCamera.startFaceDetection();
+        }
+    }
+
 
 }
