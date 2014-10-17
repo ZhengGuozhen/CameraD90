@@ -129,6 +129,7 @@ public class MyActivity extends Activity
     private Button button_lock;
     private Button button_flash;
     private Button button_focusMode;
+    private Button button_scene;
     private Button button_close;
     private RelativeLayout layout_buttons;
     private RelativeLayout layout_draw;
@@ -236,6 +237,7 @@ public class MyActivity extends Activity
         layout_draw = (RelativeLayout) findViewById(R.id.layout_draw);
         button_zoom = (Button) findViewById(R.id.button_zoom);
         button_focusMode = (Button) findViewById(R.id.button_focusMode);
+        button_scene = (Button) findViewById(R.id.button_scene);
         button_close = (Button) findViewById(R.id.button_close);
         button_ec = (Button) findViewById(R.id.button_ec);
         button_ecAdd = (Button) findViewById(R.id.button_ecAdd);
@@ -621,6 +623,24 @@ public class MyActivity extends Activity
                 }
         );
 
+        button_scene.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Camera.Parameters params = mCamera.getParameters();
+                        List<String> sceneModes = params.getSupportedSceneModes();
+                        int index = sceneModes.indexOf(params.getSceneMode());
+
+                        if(++index>=sceneModes.size()) index=0;
+
+                        params.setSceneMode(sceneModes.get(index));
+
+                        mCamera.setParameters(params);
+                        button_scene.setText(params.getSceneMode());
+                    }
+                }
+        );
+
         imageView_review_touch.setOnTouchListener(new TouchListener_review());
 
 //        imageView_review.setOnTouchListener(new TouchListener_review());
@@ -859,6 +879,7 @@ public class MyActivity extends Activity
         button_flash.setText(params.getFlashMode());
         button_zoom.setText(params.getZoom()+"");
         button_focusMode.setText(params.getFocusMode());
+        button_scene.setText(params.getSceneMode());
     }
 
     /**
@@ -1416,6 +1437,7 @@ public class MyActivity extends Activity
         button_zoom.setRotation(r);
         button_settings.setRotation(r);
         button_focusMode.setRotation(r);
+        button_scene.setRotation(r);
         button_record.setRotation(r);
         button_close.setRotation(r);
 
@@ -1453,6 +1475,7 @@ public class MyActivity extends Activity
 //        button_zoom.setVisibility(r);
         button_settings.setVisibility(r);
         button_focusMode.setVisibility(r);
+        button_scene.setVisibility(r);
 
     }
 
